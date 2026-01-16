@@ -8,7 +8,7 @@ namespace Model
     /// <summary>
     /// Информация о человеке
     /// </summary>
-    public class Person
+    public abstract class Person
     {
         /// <summary>
         /// Имя человека
@@ -68,46 +68,6 @@ namespace Model
         /// </summary>
         private static Regex _checkingEnglish =
             new Regex(@"^[A-Za-z]+(\-[A-Za-z]+)?$");
-
-        /// <summary>
-        /// Проверка имени на корректность
-        /// </summary>
-        /// <param name="name">Имя или фамилия</param>
-        /// <returns>true - Данные корректны, false - некорерктны</returns>
-        public static bool CheckName(string name)
-        {
-            if (_checkingRussian.IsMatch(name))
-            {
-                //TODO: duplication
-                _flagLanguage = 10;
-            }
-            if (_checkingEnglish.IsMatch(name))
-            {
-                //TODO: duplication
-                _flagLanguage = 11;
-            }
-            return _checkingRussian.IsMatch(name) ||
-                _checkingEnglish.IsMatch(name);
-        }
-
-        /// <summary>
-        /// Проверка имени и фамилии на корректность
-        /// </summary>
-        /// <param name="nameOrSurname">Имя или фамилия</param>
-        /// <returns>true - Данные корректны, false - некорерктны</returns>
-        public static bool CheckNameAndSurname(string nameOrSurname)
-        {
-            //TODO: duplication
-            if ((_checkingRussian.IsMatch(nameOrSurname)
-                && (_flagLanguage != 10)) ||
-                (_checkingEnglish.IsMatch(nameOrSurname)
-                && (_flagLanguage != 11)))
-            {
-                throw new Exception("Имя и фамилия должны быть на одном языке!");
-            }
-            return _checkingRussian.IsMatch(nameOrSurname) ||
-                _checkingEnglish.IsMatch(nameOrSurname);
-        }
 
         /// <summary>
         /// Проверка корректности ввода имени
@@ -200,27 +160,31 @@ namespace Model
             return $"{Name} {Surname}";
         }
 
-        //TODO: XML
+        //TODO: XML +
+        /// <summary>
+        /// Метод для вывода информации о человеке
+        /// </summary>
+        /// <returns>Базовая информация о человеке</returns>
         public string GetPersonInfo()
         {
             return $"{Name} {Surname}, возраст: {Age}, пол: {Gender}";
         }
 
-        //TODO: abstract
+        //TODO: abstract +
         /// <summary>
-        /// Виртуальный метод для получения информации, который
+        /// Абстрактный метод для получения информации, который
         /// будет индивидуально реализован в дочерних классах
         /// </summary>
         /// <returns>ИНформация о человеке</returns>
-        public virtual string GetInfo() { return null; }
+        public abstract string GetInfo();
 
-        //TODO: abstract
+        //TODO: abstract +
         /// <summary>
-        /// Виртуальный метод проверки возраста, который 
+        /// Абстрактный метод проверки возраста, который 
         /// будет индивидуально реализован в дочерних классах
         /// </summary>
         /// <param name="age">Возраст человека</param>
-        protected virtual void CheckAge(int age) { }
+        protected abstract void CheckAge(int age);
 
         /// <summary>
         /// Метод для удаления последнего символа в слове

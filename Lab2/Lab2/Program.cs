@@ -37,7 +37,8 @@ namespace Lab2
 
             Wait();
 
-            //TODO: polymorphism
+            //TODO: polymorphism + (Использование переопределенного метода
+            //GetInfo() через ссылку на базовый класс)
 
             Console.WriteLine("Тип четвертого человека из списка:");
             Console.WriteLine();
