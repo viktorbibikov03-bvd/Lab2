@@ -37,6 +37,8 @@ namespace Lab2
 
             Wait();
 
+            //TODO: polymorphism
+
             Console.WriteLine("Тип четвертого человека из списка:");
             Console.WriteLine();
             var person = listPeople.GetPersonInIndex(3);

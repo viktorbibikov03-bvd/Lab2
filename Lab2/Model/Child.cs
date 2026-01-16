@@ -176,13 +176,13 @@ namespace Model
         { 
             var random = new Random();
             var parentExistence = random.Next(1, 3);
-            if (parentExistence == 1)
+            if (parentExistence != 1)
             {
-                return null;
+                return Adult.GetRandomPerson(gender);
             }
             else
             {
-                return Adult.GetRandomPerson(gender);
+                return null;
             }
         }
 

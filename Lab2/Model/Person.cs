@@ -76,12 +76,14 @@ namespace Model
         /// <returns>true - Данные корректны, false - некорерктны</returns>
         public static bool CheckName(string name)
         {
-            if (_checkingRussian.IsMatch(name) == true)
+            if (_checkingRussian.IsMatch(name))
             {
+                //TODO: duplication
                 _flagLanguage = 10;
             }
-            if (_checkingEnglish.IsMatch(name) == true)
+            if (_checkingEnglish.IsMatch(name))
             {
+                //TODO: duplication
                 _flagLanguage = 11;
             }
             return _checkingRussian.IsMatch(name) ||
@@ -95,9 +97,10 @@ namespace Model
         /// <returns>true - Данные корректны, false - некорерктны</returns>
         public static bool CheckNameAndSurname(string nameOrSurname)
         {
-            if (((_checkingRussian.IsMatch(nameOrSurname) == true)
+            //TODO: duplication
+            if ((_checkingRussian.IsMatch(nameOrSurname)
                 && (_flagLanguage != 10)) ||
-                ((_checkingEnglish.IsMatch(nameOrSurname) == true)
+                (_checkingEnglish.IsMatch(nameOrSurname)
                 && (_flagLanguage != 11)))
             {
                 throw new Exception("Имя и фамилия должны быть на одном языке!");
@@ -197,12 +200,13 @@ namespace Model
             return $"{Name} {Surname}";
         }
 
-
+        //TODO: XML
         public string GetPersonInfo()
         {
             return $"{Name} {Surname}, возраст: {Age}, пол: {Gender}";
         }
 
+        //TODO: abstract
         /// <summary>
         /// Виртуальный метод для получения информации, который
         /// будет индивидуально реализован в дочерних классах
@@ -210,6 +214,7 @@ namespace Model
         /// <returns>ИНформация о человеке</returns>
         public virtual string GetInfo() { return null; }
 
+        //TODO: abstract
         /// <summary>
         /// Виртуальный метод проверки возраста, который 
         /// будет индивидуально реализован в дочерних классах

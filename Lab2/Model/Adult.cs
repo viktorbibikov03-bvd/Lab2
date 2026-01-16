@@ -185,7 +185,11 @@ namespace Model
 
             if (gender == Gender.Unknown)
             {
-                Gender[] genderList = { Gender.Male, Gender.Female };
+                Gender[] genderList = 
+                { 
+                    Gender.Male, 
+                    Gender.Female 
+                };
                 int genderIndex = random.Next(genderList.Length);
                 gender = genderIndex == 0
                     ? Gender.Male
@@ -230,7 +234,7 @@ namespace Model
             var employerStatus = random.Next(1, 3);
 
             string tmpEmployer = employerStatus == 1
-                ? tmpEmployer = jobList[random.Next(jobList.Length)]
+                ? jobList[random.Next(jobList.Length)]
                 : tmpEmployer = "Безработный";
 
             return new Adult(namePerson, surnamePerson, age, gender,
