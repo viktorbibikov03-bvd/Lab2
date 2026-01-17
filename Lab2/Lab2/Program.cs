@@ -43,15 +43,21 @@ namespace Lab2
 
             switch (person)
             {
-                //TODO: {}
+                //TODO: {} +
                 case Adult personAdult:
+                {
                     Console.WriteLine(personAdult.GetCar());
                     break;
+                }
                 case Child personChild:
+                {
                     Console.WriteLine(personChild.GetGame());
                     break;
+                }
                 default:
+                {
                     break;
+                }
             }
 
             Wait();
