@@ -160,7 +160,6 @@ namespace Model
             return $"{Name} {Surname}";
         }
 
-        //TODO: XML +
         /// <summary>
         /// Метод для вывода информации о человеке
         /// </summary>
@@ -170,7 +169,6 @@ namespace Model
             return $"{Name} {Surname}, возраст: {Age}, пол: {Gender}";
         }
 
-        //TODO: abstract +
         /// <summary>
         /// Абстрактный метод для получения информации, который
         /// будет индивидуально реализован в дочерних классах
@@ -178,7 +176,6 @@ namespace Model
         /// <returns>ИНформация о человеке</returns>
         public abstract string GetInfo();
 
-        //TODO: abstract +
         /// <summary>
         /// Абстрактный метод проверки возраста, который 
         /// будет индивидуально реализован в дочерних классах

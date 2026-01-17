@@ -37,15 +37,13 @@ namespace Lab2
 
             Wait();
 
-            //TODO: polymorphism + (Использование переопределенного метода
-            //GetInfo() через ссылку на базовый класс)
-
             Console.WriteLine("Тип четвертого человека из списка:");
             Console.WriteLine();
             var person = listPeople.GetPersonInIndex(3);
 
             switch (person)
             {
+                //TODO: {}
                 case Adult personAdult:
                     Console.WriteLine(personAdult.GetCar());
                     break;
