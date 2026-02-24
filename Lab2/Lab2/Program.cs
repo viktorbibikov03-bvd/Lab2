@@ -43,7 +43,6 @@ namespace Lab2
 
             switch (person)
             {
-                //TODO: {} +
                 case Adult personAdult:
                 {
                     Console.WriteLine(personAdult.GetCar());

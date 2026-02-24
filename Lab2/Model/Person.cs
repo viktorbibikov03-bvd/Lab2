@@ -3,8 +3,6 @@ using System.Text.RegularExpressions;
 
 namespace Model
 {
-    using System.Xml.Linq;
-
     /// <summary>
     /// Информация о человеке
     /// </summary>
@@ -31,11 +29,6 @@ namespace Model
         private Gender _gender;
 
         /// <summary>
-        /// Флаг для проверки имени и фамилии на идентичность алфавита
-        /// </summary>
-        private static int _flagLanguage;
-
-        /// <summary>
         /// Метод для обращения к private полям
         /// </summary>
         /// <param name="name">Имя</param>
@@ -56,25 +49,14 @@ namespace Model
         protected Person() : this("Бибиков", "Матвей", 10, Gender.Male) { }
 
         /// <summary>
-        /// Регулярное выражение для проверки
-        /// имени и фамиии на русский алфавит
-        /// </summary>
-        private static Regex _checkingRussian = 
-            new Regex(@"^[А-Яа-яёЁ]+(\-[А-Яа-яёЁ]+)?$");
-
-        /// <summary>
-        /// Регулярное выражение для проверки
-        /// имени и фамиии на английский алфавит
-        /// </summary>
-        private static Regex _checkingEnglish =
-            new Regex(@"^[A-Za-z]+(\-[A-Za-z]+)?$");
-
-        /// <summary>
         /// Проверка корректности ввода имени
         /// </summary>
         public string Name
         {
-            get { return _name; }
+            get 
+            { 
+                return _name; 
+            }
             set
             {
                 if (string.IsNullOrEmpty(value))
@@ -93,7 +75,10 @@ namespace Model
         /// </summary>
         public string Surname
         {
-            get { return _surname; }
+            get 
+            { 
+                return _surname; 
+            }
             set
             {
                 if (string.IsNullOrEmpty(value))
@@ -122,7 +107,10 @@ namespace Model
         /// </summary>
         public int Age
         {
-            get { return _age; }
+            get 
+            { 
+                return _age; 
+            }
             set
             {
                 if (string.IsNullOrEmpty(Convert.ToString(value)))
@@ -144,20 +132,14 @@ namespace Model
         /// </summary>
         public Gender Gender
         {
-            get { return _gender; }
+            get 
+            { 
+                return _gender; 
+            }
             set
             {
                 _gender = value;
             }
-        }
-
-        /// <summary>
-        /// Метод для вывода имени и фамилии человека
-        /// </summary>
-        /// <returns>Имя и фамилия человека</returns>
-        public string GetPersonNameAndSurname()
-        {
-            return $"{Name} {Surname}";
         }
 
         /// <summary>
@@ -170,10 +152,19 @@ namespace Model
         }
 
         /// <summary>
+        /// Метод для вывода имени и фамилии человека
+        /// </summary>
+        /// <returns>Имя и фамилия человека</returns>
+        public string GetPersonNameAndSurname()
+        {
+            return $"{Name} {Surname}";
+        }
+
+        /// <summary>
         /// Абстрактный метод для получения информации, который
         /// будет индивидуально реализован в дочерних классах
         /// </summary>
-        /// <returns>ИНформация о человеке</returns>
+        /// <returns>Информация о человеке</returns>
         public abstract string GetInfo();
 
         /// <summary>
