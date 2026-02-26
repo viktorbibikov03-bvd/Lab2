@@ -115,21 +115,16 @@
 
                 var retirementAge = new Dictionary<Gender, int>
                 {
-                    { Gender.Male, 65},
+                    { Gender.Male, 65 },
                     { Gender.Female, 60 }
                 };
-                
+
                 //TODO: refactor +
-                if ((value < MinAge) || 
-                    (value > retirementAge[Gender.Male]) && 
-                    (_gender == Gender.Male) || 
-                    (value > retirementAge[Gender.Female]) && 
-                    (_gender == Gender.Female))
+                if (value < MinAge || value > retirementAge[Gender])
                 {
-                    throw new IncorrectArgumentException($"{nameof(Age)} " +
-                        $"должен быть от {MinAge} до " +
-                        $"{retirementAge[Gender.Female]} для женщин и до " +
-                        $"{retirementAge[Gender.Male]} для мужчин!");
+                    throw new IncorrectArgumentException(
+                        $"Возраст сотрудника пола {Gender} должен быть от " +
+                        $"{MinAge} до {retirementAge[Gender]} лет!");
                 }
 
                 _age = value;

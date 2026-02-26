@@ -334,7 +334,7 @@ namespace Model
             Console.WriteLine($"\nЗарплата {employee.FirstName} " +
                 $"{employee.LastName} в возрасте {employee.Age} лет," +
                 $" имеющего профессию \"{employee.Profession}\", " +
-                $"составляет {Math.Round(employee.CalculateSalary(), 1)} Р");
+                $"составляет {Math.Round(employee.CalculateSalary(), 1)} Р {employee.Gender}");
         }
 
         /// <summary>
