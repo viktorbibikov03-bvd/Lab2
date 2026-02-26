@@ -30,21 +30,11 @@
         /// </summary>
         private Gender _gender;
 
-        //TODO: refactor
+        //TODO: refactor +
         /// <summary>
         /// Минимальный возраст приема на работу
         /// </summary>
         private const int MinAge = 18;
-
-        /// <summary>
-        /// Максимальный возраст сотрудника мужского пола
-        /// </summary>
-        private const int MaxAgeMale = 65;
-
-        /// <summary>
-        /// Максимальный возраст сотрудника женского пола
-        /// </summary>
-        private const int MaxAgeFemale = 60;
 
         /// <summary>
         /// Максимальное количество вводимых символов
@@ -123,35 +113,34 @@
                     throw new IncorrectArgumentException("Введите возраст!");
                 }
 
-                //TODO: refactor
-                if ((((value < MinAge) || (value > MaxAgeMale)) &&
-                    (_gender == Gender.Male)) || (((value < MinAge) ||
-                    (value > MaxAgeFemale)) && (_gender == Gender.Female)))
+                var retirementAge = new Dictionary<Gender, int>
+                {
+                    { Gender.Male, 65},
+                    { Gender.Female, 60 }
+                };
+                
+                //TODO: refactor +
+                if ((value < MinAge) || 
+                    (value > retirementAge[Gender.Male]) && 
+                    (_gender == Gender.Male) || 
+                    (value > retirementAge[Gender.Female]) && 
+                    (_gender == Gender.Female))
                 {
                     throw new IncorrectArgumentException($"{nameof(Age)} " +
-                        $"должен быть от {MinAge} до {MaxAgeFemale} " +
-                        $"для женщин и до {MaxAgeMale} для мужчин!");
+                        $"должен быть от {MinAge} до " +
+                        $"{retirementAge[Gender.Female]} для женщин и до " +
+                        $"{retirementAge[Gender.Male]} для мужчин!");
                 }
 
                 _age = value;
             }
         }
 
-        //TODO: autoproperty
+        //TODO: autoproperty +
         /// <summary>
         /// Свойство для пола человека
         /// </summary>
-        public Gender Gender 
-        { 
-            get 
-            { 
-                return _gender; 
-            }
-            set
-            { 
-                _gender = value; 
-            }
-        }
+        public Gender Gender { get; set; }
 
         /// <summary>
         /// Проверка корректности ввода профессии

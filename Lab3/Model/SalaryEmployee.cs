@@ -3,8 +3,8 @@
     /// <summary>
     /// Класс, реализующий метод оплаты по окладу
     /// </summary>
-    /// //TODO: rename
-    public class SalaryRate : EmployeBase
+    /// //TODO: rename +
+    public class SalaryEmployee : EmployeBase
     {
         /// <summary>
         /// Фиксированный оклад
