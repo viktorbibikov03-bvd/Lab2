@@ -63,15 +63,14 @@
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new IncorrectArgumentException
-                        ($"{nameof(FirstName)} не может быть пустым!");
+                    throw new IncorrectArgumentException($"Поле \"имя\" " +
+                        $"не может быть пустым!");
                 }
 
                 if (value.Length > MaxLength)
                 {
                     throw new IncorrectArgumentException($" Длина " +
-                        $"{nameof(FirstName)} не должна " +
-                        $"превышать {MaxLength}");
+                        $"имени не должна превышать {MaxLength}");
                 }
 
                 _firstName = System.Globalization.CultureInfo.CurrentCulture.
@@ -93,14 +92,13 @@
                 if (string.IsNullOrEmpty(value))
                 {
                     throw new IncorrectArgumentException
-                        ($"{nameof(LastName)} не может быть пустым!");
+                        ($"Поле \"фамилия\" не может быть пустым!");
                 }
 
                 if (value.Length > MaxLength)
                 {
                     throw new IncorrectArgumentException($" Длина " +
-                        $"{nameof(LastName)} не должна " +
-                        $"превышать {MaxLength}");
+                        $"фамилии не должна превышать {MaxLength}");
                 }
 
                 _lastName = System.Globalization.CultureInfo.CurrentCulture.
