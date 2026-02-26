@@ -21,6 +21,7 @@ namespace Model
         private static Regex _checkingEnglish = 
             new Regex(@"^[A-Za-z]+(\-[A-Za-z]+)?$");
 
+        //TODO: RSDN
         /// <summary>
         /// Поле для флага, которое установлено по умолчанию
         /// </summary>
@@ -58,6 +59,7 @@ namespace Model
                     case 3:
                     {
                         return;
+                            //TODO: remove
                         break;
                     }
                     default:
@@ -75,12 +77,13 @@ namespace Model
         /// <returns>true - Данные корректны, false - некорерктны</returns>
         private static bool CheckNameOrSurname(string nameOrSurname)
         {
-            if (_checkingRussian.IsMatch(nameOrSurname) == true)
+
+            if (_checkingRussian.IsMatch(nameOrSurname))
             {
                 Flag = FlagLanguage.Russian;
             }
 
-            if (_checkingEnglish.IsMatch(nameOrSurname) == true)
+            if (_checkingEnglish.IsMatch(nameOrSurname))
             { 
                 Flag = FlagLanguage.English;
             }
@@ -98,10 +101,10 @@ namespace Model
         /// быть написаны символами одного языка!</exception>
         private static bool CheckNameAndSurname(string nameAndSurname)
         {
-            if (((_checkingRussian.IsMatch(nameAndSurname) == true) &&
-                (Flag != FlagLanguage.Russian)) ||
-                ((_checkingEnglish.IsMatch(nameAndSurname) == true) &&
-                (Flag != FlagLanguage.English)))
+            if ((_checkingRussian.IsMatch(nameAndSurname) 
+                    && Flag != FlagLanguage.Russian) 
+                || (_checkingEnglish.IsMatch(nameAndSurname) 
+                    && Flag != FlagLanguage.English))
             {
                 throw new IncorrectArgumentException("Имя и фамилия " +
                     "должны быть на одном языке!");
@@ -117,6 +120,7 @@ namespace Model
         /// </summary>
         /// <returns>Код типа оплаты в зависимости 
         /// от введенного числа</returns>
+        /// //TODO: rename
         public static int SalaryType()
         {
             const int MinEmployeeType = 1;
@@ -224,6 +228,7 @@ namespace Model
 
                 try
                 {
+
                     if (nameOrSurname == "Имя")
                     {
                         if (!CheckNameOrSurname(inputString))
@@ -357,7 +362,7 @@ namespace Model
         private static void InputGender(EmployeBase employee)
         {
             Console.Write("1 - мужской, 2 - женский: ");
-
+            //TODO: duplication
             while (true)
             {
                 try
@@ -369,12 +374,14 @@ namespace Model
                             ? Gender.Male
                             : numberOfGender == 2
                                 ? Gender.Female
+                                //TODO: duplication
                                 : throw new IncorrectArgumentException
                                 ("Введите числа 1 - мужской пол, " +
                                 "2 - женский");
                     }
                     else
                     {
+                        //TODO: duplication
                         throw new IncorrectArgumentException
                             ("Введите числа 1 - мужской пол, 2 - женский");
                     }
@@ -395,6 +402,7 @@ namespace Model
         /// <param name="employee">Сотрудник</param>
         private static void InputAge(EmployeBase employee)
         { 
+            //TODO: duplication
             while(true)
             { 
                 Console.Write("Введите возраст сотрудника:");

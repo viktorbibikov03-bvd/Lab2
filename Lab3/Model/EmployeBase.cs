@@ -30,6 +30,7 @@
         /// </summary>
         private Gender _gender;
 
+        //TODO: refactor
         /// <summary>
         /// Минимальный возраст приема на работу
         /// </summary>
@@ -122,6 +123,7 @@
                     throw new IncorrectArgumentException("Введите возраст!");
                 }
 
+                //TODO: refactor
                 if ((((value < MinAge) || (value > MaxAgeMale)) &&
                     (_gender == Gender.Male)) || (((value < MinAge) ||
                     (value > MaxAgeFemale)) && (_gender == Gender.Female)))
@@ -135,6 +137,7 @@
             }
         }
 
+        //TODO: autoproperty
         /// <summary>
         /// Свойство для пола человека
         /// </summary>

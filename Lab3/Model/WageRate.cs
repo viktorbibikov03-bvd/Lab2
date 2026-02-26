@@ -3,6 +3,7 @@
     /// <summary>
     /// Класс, реализующий почасовой метод оплаты
     /// </summary>
+    /// //TODO: rename
     public class WageRate : EmployeBase
     {
         /// <summary>
