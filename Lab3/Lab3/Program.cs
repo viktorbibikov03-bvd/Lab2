@@ -395,7 +395,7 @@ namespace Model
                 Console.WriteLine($"{profession.Key} - {profession.Value}");
             }
 
-            string result = null;
+            string? result = null;
 
             ActionHandler(() =>
             {
