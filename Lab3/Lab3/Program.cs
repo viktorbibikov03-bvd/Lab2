@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Model 
+namespace Model
 {
     /// <summary>
     /// Основной класс программы для расчета зарплат работников фирмы
@@ -11,14 +11,14 @@ namespace Model
         /// Регулярное выражение для проверки 
         /// имени и фамиии на русский алфавит
         /// </summary>
-        private static Regex _checkingRussian = 
+        private static Regex _checkingRussian =
             new Regex(@"^[А-Яа-яёЁ]+(\-[А-Яа-яёЁ]+)?$");
 
         /// <summary>
         /// Регулярное выражение для проверки 
         /// имени и фамиии на английский алфавит
         /// </summary>
-        private static Regex _checkingEnglish = 
+        private static Regex _checkingEnglish =
             new Regex(@"^[A-Za-z]+(\-[A-Za-z]+)?$");
 
         /// <summary>
@@ -68,6 +68,27 @@ namespace Model
         }
 
         /// <summary>
+        /// Метод для выполнения действия с повторением при ошибке
+        /// </summary>
+        /// <param name="action">Действие, которое нужно выполнить</param>
+        private static void ActionHandler(Action action)
+        {
+            while (true)
+            {
+                try
+                {
+                    action();
+                    return;
+                }
+                catch (IncorrectArgumentException exception)
+                {
+                    Console.WriteLine(exception.Message);
+                    Console.WriteLine("Повторите ввод");
+                }
+            }
+        }
+
+        /// <summary>
         /// Проверка имени и фамилии на корректность
         /// </summary>
         /// <param name="nameOrSurname">Имя или фамилия сотрудника</param>
@@ -80,11 +101,11 @@ namespace Model
             }
 
             if (_checkingEnglish.IsMatch(nameOrSurname))
-            { 
+            {
                 Flag = FlagLanguage.English;
             }
 
-            return _checkingRussian.IsMatch(nameOrSurname) || 
+            return _checkingRussian.IsMatch(nameOrSurname) ||
                 _checkingEnglish.IsMatch(nameOrSurname);
         }
 
@@ -106,7 +127,7 @@ namespace Model
                     "должны быть на одном языке!");
             }
 
-            return _checkingEnglish.IsMatch(nameAndSurname) || 
+            return _checkingEnglish.IsMatch(nameAndSurname) ||
                 _checkingRussian.IsMatch(nameAndSurname);
         }
 
@@ -120,7 +141,10 @@ namespace Model
         {
             const int MinEmployeeType = 1;
             const int MaxEmployeeType = 3;
-            while (true)
+
+            int result = 0;
+
+            ActionHandler(() =>
             {
                 Console.WriteLine("Выберите тип выплаты:\n" +
                     "1 - почасовая оплата\n2 - оплата по окладу и ставке\n" +
@@ -132,19 +156,21 @@ namespace Model
                     inputInt >= MinEmployeeType &&
                     inputInt <= MaxEmployeeType)
                 {
-                    return inputInt;
+                    result = inputInt;
                 }
-
-                if (!int.TryParse(inputString, out int _))
+                else if (!int.TryParse(inputString, out int _))
                 {
-                    Console.WriteLine("Введите ЧИСЛО!");
+                    throw new IncorrectArgumentException("Введите ЧИСЛО!");
                 }
                 else
                 {
-                    Console.WriteLine($"Число должно быть в диапозоне " +
-                        $"от {MinEmployeeType} до {MaxEmployeeType}");
+                    throw new IncorrectArgumentException($"Число должно " +
+                        $"быть в диапозоне от {MinEmployeeType} " +
+                        $"до {MaxEmployeeType}");
                 }
-            }
+            });
+
+            return result;
         }
 
         /// <summary>
@@ -152,35 +178,154 @@ namespace Model
         /// </summary>
         /// <returns>Сотрудник с информацией о почасовой оплате</returns>
         private static WageEmployee CreateWageEmployee()
-        { 
+        {
             var employee = new WageEmployee();
 
             InputEmployee(employee);
 
-            ValidationOfSpecialInput("Оплата за 1 час",
-                input => employee.Wage = Convert.ToDouble(input));
+            ActionHandler(() =>
+            {
+                Console.Write("Введите оплату за 1 час: ");
+                string input = Console.ReadLine();
 
-            ValidationOfSpecialInput("Количество отработанных часов", 
-                input => employee.HourCount = Convert.ToDouble(input));
+                if (double.TryParse(input, out double wage))
+                {
+                    employee.Wage = wage;
+                }
+                else
+                {
+                    throw new IncorrectArgumentException
+                    ("Необходимо ввести число!");
+                }
+            });
+
+            ActionHandler(() =>
+            {
+                Console.Write("Введите количество отработанных часов: ");
+                string input = Console.ReadLine();
+
+                if (double.TryParse(input, out double hourCount))
+                {
+                    employee.HourCount = hourCount;
+                }
+                else
+                {
+                    throw new IncorrectArgumentException
+                    ("Необходимо ввести число!");
+                }
+            });
 
             return employee;
         }
-        
+
         /// <summary>
         /// Метод для ввода данных о сотруднике
         /// </summary>
         /// <param name="employee">Сотрудник фирмы</param>
         private static void InputEmployee(EmployeBase employee)
         {
-            InputNameOrSurname("Имя", inputName => 
-            employee.FirstName = inputName);
-            InputNameOrSurname("Фамилия", inputSurname => 
-            employee.LastName = inputSurname);
-            InputGender("пол сотрудника", inputGender => 
-            employee.Gender = inputGender);
-            InputAge("возраст", inputAge => employee.Age = inputAge);
+            InputFirstName(employee);
+            InputLastName(employee);
+            InputGender(employee);
+            InputAge(employee);
+            employee.Profession = ChooseProfession();
+        }
 
-            employee.Profession = ChoosenProfession();
+        /// <summary>
+        /// Метод для ввода имени сотрудника
+        /// </summary>
+        /// <param name="employee">Сотрудник</param>
+        private static void InputFirstName(EmployeBase employee)
+        {
+            ActionHandler(() =>
+            {
+                Console.Write("Введите имя: ");
+                string input = Console.ReadLine();
+
+                if (!CheckNameOrSurname(input))
+                {
+                    throw new IncorrectArgumentException
+                        ("Имя должно состоять из букв одного алфавита!");
+                }
+
+                employee.FirstName = input;
+            });
+        }
+
+        /// <summary>
+        /// Метод для ввода фамилии сотрудника
+        /// </summary>
+        /// <param name="employee">Сотрудник</param>
+        private static void InputLastName(EmployeBase employee)
+        {
+            ActionHandler(() =>
+            {
+                Console.Write("Введите фамилию: ");
+                string input = Console.ReadLine();
+
+                if (!CheckNameAndSurname(input))
+                {
+                    throw new IncorrectArgumentException
+                        ("Фамилия должна состоять из букв одного алфавита!");
+                }
+
+                employee.LastName = input;
+            });
+        }
+
+        /// <summary>
+        /// Метод для ввода пола сотрудника
+        /// </summary>
+        /// <param name="employee">Сотрудник</param>
+        private static void InputGender(EmployeBase employee)
+        {
+            ActionHandler(() =>
+            {
+                Console.Write("Введите пол сотрудника: " +
+                    "1 - мужской, 2 - женский: ");
+                string numberOfGender = Console.ReadLine();
+
+                switch (numberOfGender)
+                {
+                    case "1":
+                    {
+                        employee.Gender = Gender.Male;
+                        break;
+                    }
+                    case "2":
+                    {
+                        employee.Gender = Gender.Female;
+                        break;
+                    }
+                    default:
+                    {
+                        throw new IncorrectArgumentException
+                                ("Необходимо ввести число 1 или 2!");
+                    }
+                }
+            });
+        }
+
+        /// <summary>
+        /// Метод для ввода возраста сотрудника
+        /// </summary>
+        /// <param name="employee">Сотрудник</param>
+        private static void InputAge(EmployeBase employee)
+        {
+            ActionHandler(() =>
+            {
+                Console.Write("Введите возраст сотрудника: ");
+
+                if (int.TryParse(Console.ReadLine(), out int age))
+                {
+                    employee.Age = age;
+                }
+                else
+                {
+                    throw new IncorrectArgumentException("При вводе " +
+                        "возраста необходимо использовать только числа");
+                }
+            });
         }
 
         /// <summary>
@@ -194,69 +339,44 @@ namespace Model
 
             InputEmployee(employee);
 
-            ValidationOfSpecialInput("Оклад", 
-                input => employee.Salary = Convert.ToDouble(input));
-
-            ValidationOfSpecialInput("Ставка премии (%)", 
-                input => employee.Commission = Convert.ToDouble(input));
-
-            return employee;
-        }
-
-        //TODO: duplication
-        /// <summary>
-        /// Метод для ввода имени или фамилии с валидацией
-        /// </summary>
-        /// <param name="fieldName">Слово "Имя" или "Фамилия"</param>
-        /// <param name="action">Поле, которому будет присвоено 
-        /// значение в результате валидации</param>
-        /// <exception cref="IncorrectArgumentException">Сообщение 
-        /// об исключениях</exception>
-        private static void InputNameOrSurname(string fieldName, 
-            Action<string> action)
-        {
-            while (true)
+            ActionHandler(() =>
             {
-                Console.Write($"Введите {fieldName.ToLower()}: ");
+                Console.Write("Введите оклад: ");
                 string input = Console.ReadLine();
 
-                try
+                if (double.TryParse(input, out double salary))
                 {
-                    if (fieldName == "Имя")
-                    {
-                        if (!CheckNameOrSurname(input))
-                        {
-                            throw new IncorrectArgumentException
-                                ($"{fieldName} должно состоять из букв " +
-                                $"одного алфавита!");
-                        }
-                    }
-                    else
-                    {
-                        if (!CheckNameAndSurname(input))
-                        {
-                            throw new IncorrectArgumentException
-                                ($"{fieldName} должна состоять из букв " +
-                                $"одного алфавита!");
-                        }
-                    }
+                    employee.Salary = salary;
+                }
+                else
+                {
+                    throw new IncorrectArgumentException("Необходимо ввести число!");
+                }
+            });
 
-                    action(input);
-                    return;
-                }
-                catch (IncorrectArgumentException ex)
+            ActionHandler(() =>
+            {
+                Console.Write("Введите ставку премии (%): ");
+                string input = Console.ReadLine();
+
+                if (double.TryParse(input, out double commission))
                 {
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine("Повторите ввод");
+                    employee.Commission = commission;
                 }
-            }
+                else
+                {
+                    throw new IncorrectArgumentException("Необходимо ввести число!");
+                }
+            });
+
+            return employee;
         }
 
         /// <summary>
         /// Выбор профессии для расчета заработной платы
         /// </summary>
         /// <returns>Выбранная профессия</returns>
-        private static string ChoosenProfession()
+        private static string ChooseProfession()
         {
             var professions = new Dictionary<int, string>
             {
@@ -273,57 +393,24 @@ namespace Model
                 Console.WriteLine($"{profession.Key} - {profession.Value}");
             }
 
-            while (true)
+            string result = null;
+
+            ActionHandler(() =>
             {
                 Console.WriteLine("Введите номер профессии:");
 
                 if (int.TryParse(Console.ReadLine(), out int choiceKey)
                     && professions.ContainsKey(choiceKey))
                 {
-                    return professions[choiceKey];
+                    result = professions[choiceKey];
                 }
-                else 
+                else
                 {
-                    Console.WriteLine("Неверный выбор! Повторите ввод!");
+                    throw new IncorrectArgumentException("Неверный выбор! Повторите ввод!");
                 }
-            }
-        }
+            });
 
-        //TODO: duplication
-        /// <summary>
-        /// Метод для ввода значений с последующей валидацией
-        /// </summary>
-        /// <param name="specialInput">Информация о том, 
-        /// что необходимо ввести пользователю</param>
-        /// <param name="action">Поле, которому будет присвоено 
-        /// значение в результате валидации</param>
-        private static void ValidationOfSpecialInput
-            (string specialInput, Action<string> action)
-        {
-            while (true)
-            {
-                Console.Write($"Введите {specialInput.ToLower()}: ");
-                string input = Console.ReadLine();
-
-                try
-                {
-                    if (double.TryParse(input, out double inputInt))
-                    {
-                        action(input);
-                        return;
-                    }
-                    else
-                    { 
-                        throw new IncorrectArgumentException
-                            ("Необходимо ввести число!");
-                    }
-                }
-                catch (IncorrectArgumentException exceptionMessage)
-                {
-                    Console.WriteLine(exceptionMessage.Message);
-                    Console.WriteLine("Повторите ввод");
-                }
-            }
+            return result;
         }
 
         /// <summary>
@@ -336,93 +423,6 @@ namespace Model
                 $"{employee.LastName} в возрасте {employee.Age} лет," +
                 $" имеющего профессию \"{employee.Profession}\", " +
                 $"составляет {Math.Round(employee.CalculateSalary(), 1)} Р");
-        }
-
-        //TODO: duplication
-        /// <summary>
-        /// Метод для ввода пола сотрудника
-        /// </summary>
-        /// <param name="fieldGender">Информация о том, 
-        /// что необходимо ввести пользователю</param>
-        /// <param name="action">Поле, которому будет присвоено 
-        /// значение в результате валидации</param>
-        /// <exception cref="IncorrectArgumentException">Сообщение
-        /// об исключениях</exception>
-        private static void InputGender(string fieldGender, 
-            Action<Gender> action)
-        {
-            Console.Write($"Введите {fieldGender}: " +
-                $"1 - мужской, 2 - женский: ");
-
-            while (true)
-            {
-                try
-                {
-                    string numberOfGender = Console.ReadLine();
-
-                    switch (numberOfGender)
-                    {
-                        case "1":
-                        {
-                            action(Gender.Male);
-                            break;
-                        }
-                        case "2":
-                        {
-                            action(Gender.Female);
-                            break;
-                        }
-                        default:
-                        {
-                            throw new IncorrectArgumentException
-                                    ("Необходимо ввести число 1 или 2!");
-                        }
-                    }
-
-                    return;
-                }
-                catch (IncorrectArgumentException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine("Повторите ввод");
-                }
-            }
-        }
-
-        //TODO: duplication
-        /// <summary>
-        /// Метод для ввода возраста сотрудника
-        /// </summary>
-        /// <param name="fieldAge">Информация о том, 
-        /// что необходимо ввести пользователю</param>
-        /// <param name="action">Поле, которому будет присвоено 
-        /// значение в результате валидации</param>
-        private static void InputAge(string fieldAge, Action<int> action)
-        { 
-            while(true)
-            { 
-                Console.Write($"Введите {fieldAge} сотрудника:");
-
-                try
-                {
-                    if (int.TryParse(Console.ReadLine(), out int age))
-                    {
-                        action(age);
-                    }
-                    else
-                    {
-                        throw new IncorrectArgumentException("При вводе " +
-                            "возраста необходимо использовать только числа");
-                    }
-
-                    return;
-                }
-                catch (IncorrectArgumentException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine("Повторите ввод");
-                }
-            }
         }
     }
 }

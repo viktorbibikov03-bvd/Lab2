@@ -1,4 +1,6 @@
-﻿namespace Model
+﻿using static System.Net.Mime.MediaTypeNames;
+
+namespace Model
 {
     /// <summary>
     /// Класс, реализующий метод оплаты по окладу
@@ -41,20 +43,11 @@
             }
             set
             {
-                //TODO: duplication
-                if (string.IsNullOrEmpty(Convert.ToString(value)))
-                {
-                    throw new IncorrectArgumentException($"Поле " +
-                        $"{nameof(Salary)} должно быть заполнено!");
-                }
+                //TODO: duplication +
+                ValidateStringField(Convert.ToString(value), "оклад");
 
-                //TODO: duplication
-                if (value <= 0 || value > MaxSalary)
-                {
-                    throw new IncorrectArgumentException($"Оклад должен " +
-                        $"быть больше 0, но не превышать сумму " +
-                        $"максимального оклада: {MaxSalary}");
-                }
+                //TODO: duplication +
+                ValidateRange(value, "оклад", 0, MaxSalary);
 
                 _salary = value;
             }
@@ -71,18 +64,11 @@
             }
             set
             {
-                if (string.IsNullOrEmpty(Convert.ToString(value)))
-                {
-                    throw new IncorrectArgumentException($"Поле " +
-                        $"{nameof(Commission)} должно быть заполнено!");
-                }
-                //TODO: duplication
-                if ((value < MinComission) || (value > MaxComission))
-                {
-                    throw new IncorrectArgumentException($"Процент " +
-                        $"комиссионных должен лежать от {MinComission} " +
-                        $"до {MaxComission}");
-                }
+                ValidateStringField(Convert.ToString(value), "% по окладу");
+
+                //TODO: duplication +
+                ValidateRange(value, "% по окладу", 
+                    MinComission, MaxComission);
 
                 _commissionСharge = value;
             }

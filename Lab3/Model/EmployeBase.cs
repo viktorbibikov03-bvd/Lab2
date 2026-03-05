@@ -26,15 +26,51 @@
         private string _profession;
 
         /// <summary>
+        /// Максимальное количество вводимых символов
+        /// </summary>
+        private const int MaxLength = 30;
+
+        /// <summary>
         /// Минимальный возраст приема на работу
         /// </summary>
         private const int MinAge = 18;
 
         /// <summary>
-        /// Максимальное количество вводимых символов
+        /// Валидация строкового поля
         /// </summary>
-        private const int MaxLength = 30;
+        /// <param name="value">Значение для проверки</param>
+        /// <param name="fieldName">Название поля</param>
+        /// <exception cref="IncorrectArgumentException">
+        /// Ошибка валидации</exception>
+        protected static void ValidateStringField(string value, string fieldName)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new IncorrectArgumentException
+                    ($"Поле \"{fieldName}\" не может быть пустым!");
+            }
 
+            if (value.Length > MaxLength)
+            {
+                throw new IncorrectArgumentException
+                    ($"Длина поля \"{fieldName}\" не должна " +
+                    $"превышать {MaxLength} символов");
+            }
+        }
+
+        /// <summary>
+        /// Приведение строки к правильному формату 
+        /// (первая буква заглавная, остальные строчные)
+        /// </summary>
+        /// <param name="value">Строка для форматирования</param>
+        /// <returns>Отформатированная строка</returns>
+        private static string FormatString(string value)
+        {
+            return System.Globalization.CultureInfo.CurrentCulture
+                .TextInfo.ToTitleCase(value.ToLower());
+        }
+
+        
         /// <summary>
         /// Проверка корректности ввода имени
         /// </summary>
@@ -46,21 +82,8 @@
             }
             set
             {
-                //TODO: duplication
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new IncorrectArgumentException($"Поле \"имя\" " +
-                        $"не может быть пустым!");
-                }
-                //TODO: duplication
-                if (value.Length > MaxLength)
-                {
-                    throw new IncorrectArgumentException($" Длина " +
-                        $"имени не должна превышать {MaxLength}");
-                }
-
-                _firstName = System.Globalization.CultureInfo.CurrentCulture.
-                    TextInfo.ToTitleCase(value.ToLower());
+                ValidateStringField(value, "имя");
+                _firstName = FormatString(value);
             }
         }
 
@@ -75,21 +98,8 @@
             }
             set
             {
-                //TODO: duplication
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new IncorrectArgumentException
-                        ($"Поле \"фамилия\" не может быть пустым!");
-                }
-                //TODO: duplication
-                if (value.Length > MaxLength)
-                {
-                    throw new IncorrectArgumentException($" Длина " +
-                        $"фамилии не должна превышать {MaxLength}");
-                }
-
-                _lastName = System.Globalization.CultureInfo.CurrentCulture.
-                    TextInfo.ToTitleCase(value.ToLower());
+                ValidateStringField(value, "фамилия");
+                _lastName = FormatString(value);
             }
         }
 
@@ -115,12 +125,7 @@
                     { Gender.Female, 60 }
                 };
 
-                if (value < MinAge || value > retirementAge[Gender])
-                {
-                    throw new IncorrectArgumentException(
-                        $"Возраст сотрудника пола {Gender} должен быть от " +
-                        $"{MinAge} до {retirementAge[Gender]} лет!");
-                }
+                ValidateRange(value, "возраст", MinAge, retirementAge[Gender]);
 
                 _age = value;
             }
@@ -142,23 +147,8 @@
             }
             set
             {
-                //TODO: duplication
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new IncorrectArgumentException
-                        ($"{nameof(Profession)} не может быть пустым!");
-                }
-
-                //TODO: duplication
-                if (value.Length > MaxLength)
-                {
-                    throw new IncorrectArgumentException($" Длина " +
-                        $"{nameof(Profession)} не должна " +
-                        $"превышать {MaxLength}");
-                }
-
-                _profession = System.Globalization.CultureInfo.
-                    CurrentCulture.TextInfo.ToTitleCase(value.ToLower());
+                ValidateStringField(value, nameof(Profession).ToLower());
+                _profession = FormatString(value);
             }
         }
 
@@ -167,5 +157,27 @@
         /// </summary>
         /// <returns>Заработная плата, ₽</returns>
         public abstract double CalculateSalary();
+
+        /// <summary>
+        /// Метод для валидации при диапозонах
+        /// </summary>
+        /// <param name="value">Число, которое обрабатывается</param>
+        /// <param name="fieldName">Название обрадатываемого значения</param>
+        /// <param name="minValue">Минимальное число в диапозоне</param>
+        /// <param name="maxValue">Максимальное число в диапозоне</param>
+        /// <param name="customMessage">Сообщение исключения</param>
+        /// <exception cref="IncorrectArgumentException">Ошибки при валидации
+        /// </exception>
+        protected static void ValidateRange(double value, string fieldName, 
+            int minValue, int maxValue, string customMessage = null)
+        {
+            if (value < minValue || value > maxValue)
+            {
+                string message = customMessage ??
+                    $"Значение поля \"{fieldName}\" должно быть в " +
+                    $"диапазоне от {minValue} до {maxValue}";
+                throw new IncorrectArgumentException(message);
+            }
+        }
     }
 }

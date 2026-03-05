@@ -37,20 +37,14 @@
             }
             set
             {
-                //TODO: duplication
-                if (string.IsNullOrEmpty(Convert.ToString(value)))
-                { 
-                    throw new IncorrectArgumentException
-                        ($"Поле {nameof(HourCount)} должно быть заполнено!");
-                }
+                //TODO: duplication +
+                ValidateStringField(Convert.ToString(value), 
+                    "число отработанных часов");
 
-                //TODO: duplication
-                if (value < 0 || value > MaxHoursInMonth)
-                {
-                    throw new IncorrectArgumentException($"Количество " +
-                        $"отработанных часов должно быть в пределах " +
-                        $"от 0 до {MaxHoursInMonth} согласно ТК РФ");
-                }
+                //TODO: duplication +
+                ValidateRange(value, "число отработанных часов", 0, 
+                    MaxHoursInMonth);
+
 
                 _hourCount = value;
             }
@@ -67,20 +61,12 @@
             }
             set
             {
-                //TODO: duplication
-                if (string.IsNullOrEmpty(Convert.ToString(value)))
-                {
-                    throw new IncorrectArgumentException
-                        ($"Поле {nameof(Wage)} должно быть заполнено!");
-                }
-                //TODO: duplication
-                if (value <= 0 || value > MaxWageForHour)
-                {
-                    throw new IncorrectArgumentException($"Заниматься " +
-                        $"расточительством запрещено!\nСумма, " +
-                        $"которую фирма может платить сотруднику в час," +
-                        $"лежит в пределах от 0 до {MaxWageForHour}");
-                }
+                //TODO: duplication +
+                ValidateStringField(Convert.ToString(value), 
+                    "оплата за час");
+
+                //TODO: duplication +
+                ValidateRange(value, "оплата за 1 час", 0, MaxWageForHour);
 
                 _wage = value;
             }
