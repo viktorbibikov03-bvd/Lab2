@@ -301,7 +301,6 @@ namespace Model
             while (true)
             {
                 Console.Write($"Введите {specialInput.ToLower()}: ");
-
                 string input = Console.ReadLine();
 
                 try
