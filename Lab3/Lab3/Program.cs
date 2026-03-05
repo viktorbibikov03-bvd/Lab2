@@ -414,7 +414,7 @@ namespace Model
                 else
                 {
                     throw new IncorrectArgumentException
-                    ("Неверный выбор! Повторите ввод!");
+                        ("Неверный выбор! Повторите ввод!");
                 }
             });
 
