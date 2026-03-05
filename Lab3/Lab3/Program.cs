@@ -350,7 +350,8 @@ namespace Model
                 }
                 else
                 {
-                    throw new IncorrectArgumentException("Необходимо ввести число!");
+                    throw new IncorrectArgumentException
+                    ("Необходимо ввести число!");
                 }
             });
 
@@ -365,7 +366,8 @@ namespace Model
                 }
                 else
                 {
-                    throw new IncorrectArgumentException("Необходимо ввести число!");
+                    throw new IncorrectArgumentException
+                    ("Необходимо ввести число!");
                 }
             });
 
@@ -406,7 +408,8 @@ namespace Model
                 }
                 else
                 {
-                    throw new IncorrectArgumentException("Неверный выбор! Повторите ввод!");
+                    throw new IncorrectArgumentException
+                    ("Неверный выбор! Повторите ввод!");
                 }
             });
 

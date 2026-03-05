@@ -42,7 +42,8 @@
         /// <param name="fieldName">Название поля</param>
         /// <exception cref="IncorrectArgumentException">
         /// Ошибка валидации</exception>
-        protected static void ValidateStringField(string value, string fieldName)
+        protected static void ValidateStringField
+            (string value, string fieldName)
         {
             if (string.IsNullOrEmpty(value))
             {
@@ -125,7 +126,8 @@
                     { Gender.Female, 60 }
                 };
 
-                ValidateRange(value, "возраст", MinAge, retirementAge[Gender]);
+                ValidateRange(value, "возраст", MinAge, 
+                    retirementAge[Gender]);
 
                 _age = value;
             }
