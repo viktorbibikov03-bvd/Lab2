@@ -3,7 +3,6 @@
     /// <summary>
     /// Класс, реализующий почасовой метод оплаты
     /// </summary>
-    /// //TODO: rename +
     public class WageEmployee : EmployeBase
     {
         /// <summary>
@@ -38,12 +37,14 @@
             }
             set
             {
+                //TODO: duplication
                 if (string.IsNullOrEmpty(Convert.ToString(value)))
                 { 
                     throw new IncorrectArgumentException
                         ($"Поле {nameof(HourCount)} должно быть заполнено!");
                 }
 
+                //TODO: duplication
                 if (value < 0 || value > MaxHoursInMonth)
                 {
                     throw new IncorrectArgumentException($"Количество " +
@@ -66,12 +67,13 @@
             }
             set
             {
+                //TODO: duplication
                 if (string.IsNullOrEmpty(Convert.ToString(value)))
                 {
                     throw new IncorrectArgumentException
                         ($"Поле {nameof(Wage)} должно быть заполнено!");
                 }
-
+                //TODO: duplication
                 if (value <= 0 || value > MaxWageForHour)
                 {
                     throw new IncorrectArgumentException($"Заниматься " +

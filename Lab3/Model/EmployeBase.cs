@@ -25,7 +25,6 @@
         /// </summary>
         private string _profession;
 
-        //TODO: refactor +
         /// <summary>
         /// Минимальный возраст приема на работу
         /// </summary>
@@ -47,12 +46,13 @@
             }
             set
             {
+                //TODO: duplication
                 if (string.IsNullOrEmpty(value))
                 {
                     throw new IncorrectArgumentException($"Поле \"имя\" " +
                         $"не может быть пустым!");
                 }
-
+                //TODO: duplication
                 if (value.Length > MaxLength)
                 {
                     throw new IncorrectArgumentException($" Длина " +
@@ -75,12 +75,13 @@
             }
             set
             {
+                //TODO: duplication
                 if (string.IsNullOrEmpty(value))
                 {
                     throw new IncorrectArgumentException
                         ($"Поле \"фамилия\" не может быть пустым!");
                 }
-
+                //TODO: duplication
                 if (value.Length > MaxLength)
                 {
                     throw new IncorrectArgumentException($" Длина " +
@@ -114,7 +115,6 @@
                     { Gender.Female, 60 }
                 };
 
-                //TODO: refactor +
                 if (value < MinAge || value > retirementAge[Gender])
                 {
                     throw new IncorrectArgumentException(
@@ -126,7 +126,6 @@
             }
         }
 
-        //TODO: autoproperty +
         /// <summary>
         /// Свойство для пола человека
         /// </summary>
@@ -143,12 +142,14 @@
             }
             set
             {
+                //TODO: duplication
                 if (string.IsNullOrEmpty(value))
                 {
                     throw new IncorrectArgumentException
                         ($"{nameof(Profession)} не может быть пустым!");
                 }
 
+                //TODO: duplication
                 if (value.Length > MaxLength)
                 {
                     throw new IncorrectArgumentException($" Длина " +

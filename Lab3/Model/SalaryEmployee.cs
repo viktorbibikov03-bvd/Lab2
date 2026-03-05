@@ -3,7 +3,6 @@
     /// <summary>
     /// Класс, реализующий метод оплаты по окладу
     /// </summary>
-    /// //TODO: rename +
     public class SalaryEmployee : EmployeBase
     {
         /// <summary>
@@ -42,12 +41,14 @@
             }
             set
             {
+                //TODO: duplication
                 if (string.IsNullOrEmpty(Convert.ToString(value)))
                 {
                     throw new IncorrectArgumentException($"Поле " +
                         $"{nameof(Salary)} должно быть заполнено!");
                 }
 
+                //TODO: duplication
                 if (value <= 0 || value > MaxSalary)
                 {
                     throw new IncorrectArgumentException($"Оклад должен " +
@@ -75,7 +76,7 @@
                     throw new IncorrectArgumentException($"Поле " +
                         $"{nameof(Commission)} должно быть заполнено!");
                 }
-
+                //TODO: duplication
                 if ((value < MinComission) || (value > MaxComission))
                 {
                     throw new IncorrectArgumentException($"Процент " +

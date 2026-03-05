@@ -203,6 +203,7 @@ namespace Model
             return employee;
         }
 
+        //TODO: duplication
         /// <summary>
         /// Метод для ввода имени или фамилии с валидацией
         /// </summary>
@@ -288,6 +289,7 @@ namespace Model
             }
         }
 
+        //TODO: duplication
         /// <summary>
         /// Метод для ввода значений с последующей валидацией
         /// </summary>
@@ -336,6 +338,7 @@ namespace Model
                 $"составляет {Math.Round(employee.CalculateSalary(), 1)} Р");
         }
 
+        //TODO: duplication
         /// <summary>
         /// Метод для ввода пола сотрудника
         /// </summary>
@@ -386,6 +389,7 @@ namespace Model
             }
         }
 
+        //TODO: duplication
         /// <summary>
         /// Метод для ввода возраста сотрудника
         /// </summary>
