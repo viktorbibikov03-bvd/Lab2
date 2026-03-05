@@ -235,8 +235,8 @@ namespace Model
                         if (!CheckNameAndSurname(input))
                         {
                             throw new IncorrectArgumentException
-                                ($"{fieldName} должна быть из символов " +
-                                $"того же алфавита, что и имя");
+                                ($"{fieldName} должна состоять из букв " +
+                                $"одного алфавита!");
                         }
                     }
 

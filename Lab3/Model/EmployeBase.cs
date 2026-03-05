@@ -25,11 +25,6 @@
         /// </summary>
         private string _profession;
 
-        /// <summary>
-        /// Пол работника
-        /// </summary>
-        private Gender _gender;
-
         //TODO: refactor +
         /// <summary>
         /// Минимальный возраст приема на работу
