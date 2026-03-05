@@ -43,10 +43,8 @@ namespace Model
             }
             set
             {
-                //TODO: duplication +
                 ValidateStringField(Convert.ToString(value), "оклад");
 
-                //TODO: duplication +
                 ValidateRange(value, "оклад", 0, MaxSalary);
 
                 _salary = value;
@@ -66,7 +64,6 @@ namespace Model
             {
                 ValidateStringField(Convert.ToString(value), "% по окладу");
 
-                //TODO: duplication +
                 ValidateRange(value, "% по окладу", 
                     MinComission, MaxComission);
 
