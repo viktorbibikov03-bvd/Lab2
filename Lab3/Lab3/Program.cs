@@ -139,6 +139,7 @@ namespace Model
         /// от введенного числа</returns>
         public static int GetSalaryType()
         {
+            //TODO: RSDN
             const int MinEmployeeType = 1;
             const int MaxEmployeeType = 3;
 
@@ -147,7 +148,8 @@ namespace Model
             ActionHandler(() =>
             {
                 Console.WriteLine("Выберите тип выплаты:\n" +
-                    "1 - почасовая оплата\n2 - оплата по окладу и ставке\n" +
+                    "1 - почасовая оплата\n" +
+                    "2 - оплата по окладу и ставке\n" +
                     "3 - выход из калькулятора заработной платы");
 
                 string inputString = Console.ReadLine();
@@ -194,6 +196,7 @@ namespace Model
                 }
                 else
                 {
+                    //TODO: отступы
                     throw new IncorrectArgumentException
                     ("Необходимо ввести число!");
                 }
@@ -210,6 +213,7 @@ namespace Model
                 }
                 else
                 {
+                    //TODO: отступы
                     throw new IncorrectArgumentException
                     ("Необходимо ввести число!");
                 }
@@ -299,6 +303,7 @@ namespace Model
                     }
                     default:
                     {
+                        //TODO: отступы
                         throw new IncorrectArgumentException
                                 ("Необходимо ввести число 1 или 2!");
                     }
@@ -351,7 +356,7 @@ namespace Model
                 else
                 {
                     throw new IncorrectArgumentException
-                    ("Необходимо ввести число!");
+                        ("Необходимо ввести число!");
                 }
             });
 

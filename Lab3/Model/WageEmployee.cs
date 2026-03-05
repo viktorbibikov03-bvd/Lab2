@@ -37,11 +37,9 @@
             }
             set
             {
-                //TODO: duplication +
                 ValidateStringField(Convert.ToString(value), 
                     "число отработанных часов");
 
-                //TODO: duplication +
                 ValidateRange(value, "число отработанных часов", 0, 
                     MaxHoursInMonth);
 
@@ -61,11 +59,9 @@
             }
             set
             {
-                //TODO: duplication +
                 ValidateStringField(Convert.ToString(value), 
                     "оплата за час");
 
-                //TODO: duplication +
                 ValidateRange(value, "оплата за 1 час", 0, MaxWageForHour);
 
                 _wage = value;
