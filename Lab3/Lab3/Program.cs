@@ -139,9 +139,9 @@ namespace Model
         /// от введенного числа</returns>
         public static int GetSalaryType()
         {
-            //TODO: RSDN
-            const int MinEmployeeType = 1;
-            const int MaxEmployeeType = 3;
+            //TODO: RSDN +
+            const int minEmployeeType = 1;
+            const int maxEmployeeType = 3;
 
             int result = 0;
 
@@ -155,8 +155,8 @@ namespace Model
                 string inputString = Console.ReadLine();
 
                 if (int.TryParse(inputString, out int inputInt) &&
-                    inputInt >= MinEmployeeType &&
-                    inputInt <= MaxEmployeeType)
+                    inputInt >= minEmployeeType &&
+                    inputInt <= maxEmployeeType)
                 {
                     result = inputInt;
                 }
@@ -167,8 +167,8 @@ namespace Model
                 else
                 {
                     throw new IncorrectArgumentException($"Число должно " +
-                        $"быть в диапозоне от {MinEmployeeType} " +
-                        $"до {MaxEmployeeType}");
+                        $"быть в диапозоне от {minEmployeeType} " +
+                        $"до {maxEmployeeType}");
                 }
             });
 
@@ -196,9 +196,9 @@ namespace Model
                 }
                 else
                 {
-                    //TODO: отступы
+                    //TODO: отступы +
                     throw new IncorrectArgumentException
-                    ("Необходимо ввести число!");
+                        ("Необходимо ввести число!");
                 }
             });
 
@@ -213,9 +213,9 @@ namespace Model
                 }
                 else
                 {
-                    //TODO: отступы
+                    //TODO: отступы +
                     throw new IncorrectArgumentException
-                    ("Необходимо ввести число!");
+                        ("Необходимо ввести число!");
                 }
             });
 
@@ -303,9 +303,9 @@ namespace Model
                     }
                     default:
                     {
-                        //TODO: отступы
+                        //TODO: отступы +
                         throw new IncorrectArgumentException
-                                ("Необходимо ввести число 1 или 2!");
+                            ("Необходимо ввести число 1 или 2!");
                     }
                 }
             });
@@ -372,7 +372,7 @@ namespace Model
                 else
                 {
                     throw new IncorrectArgumentException
-                    ("Необходимо ввести число!");
+                        ("Необходимо ввести число!");
                 }
             });
 
