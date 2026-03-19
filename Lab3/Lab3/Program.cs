@@ -139,7 +139,6 @@ namespace Model
         /// от введенного числа</returns>
         public static int GetSalaryType()
         {
-            //TODO: RSDN +
             const int minEmployeeType = 1;
             const int maxEmployeeType = 3;
 
@@ -196,7 +195,6 @@ namespace Model
                 }
                 else
                 {
-                    //TODO: отступы +
                     throw new IncorrectArgumentException
                         ("Необходимо ввести число!");
                 }
@@ -213,7 +211,6 @@ namespace Model
                 }
                 else
                 {
-                    //TODO: отступы +
                     throw new IncorrectArgumentException
                         ("Необходимо ввести число!");
                 }
