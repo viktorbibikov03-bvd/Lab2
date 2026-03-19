@@ -176,10 +176,10 @@ namespace Lab4
                         "Информация",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                catch (Exception ex)
+                catch (Exception exception)
                 {
                     MessageBox.Show(
-                        $"Ошибка при загрузке файла: {ex.Message}",
+                        $"Ошибка при загрузке файла: {exception.Message}",
                         "Ошибка", MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 }

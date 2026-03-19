@@ -337,7 +337,7 @@ namespace Lab4
                 ComboBoxForGender.SelectedItem = gender;
 
                 int maxAge = gender == Gender.Male 
-                    ? 65 
+                    ? 65
                     : 60;
 
                 int age = random.Next(18, maxAge + 1);
