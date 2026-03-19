@@ -354,13 +354,8 @@ namespace Lab4
 
                     salary = Math.Round(salary + random.NextDouble(), 2);
 
-<<<<<<< HEAD
                     //TODO: magic (to const) +
                     TextBoxForParameter1.Text = salary.ToString(format).
-=======
-                    //TODO: magic (to const)
-                    TextBoxForParameter1.Text = salary.ToString("F2").
->>>>>>> 4894a2ea48f9612302c8c0f604a3eb8cae4aafe0
                         Replace(',', '.');
 
                     double commission = random.Next(0, 101);

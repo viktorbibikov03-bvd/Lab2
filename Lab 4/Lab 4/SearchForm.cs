@@ -13,11 +13,7 @@ namespace Lab4
         /// </summary>
         private readonly List<EmployeBase> _sourceEmployees;
 
-<<<<<<< HEAD
         //TODO: refactor +
-=======
-        //TODO: refactor
->>>>>>> 4894a2ea48f9612302c8c0f604a3eb8cae4aafe0
         /// <summary>
         /// Делегат для обновления результатов поиска
         /// </summary>

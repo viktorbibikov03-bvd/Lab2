@@ -7,11 +7,7 @@ namespace Lab4
     /// </summary>
     public partial class MainForm : Form
     {
-<<<<<<< HEAD
         //TODO: RSDN +
-=======
-        //TODO: RSDN
->>>>>>> 4894a2ea48f9612302c8c0f604a3eb8cae4aafe0
         /// <summary>
         /// Список сотрудников
         /// </summary>
@@ -70,16 +66,10 @@ namespace Lab4
         /// <param name="eventArgs">Аргументы события</param>
         private void AddButton_Click(object sender, EventArgs eventArgs)
         {
-<<<<<<< HEAD
             //TODO: WTF? +
             var addEmployeeForm = new AddEmployeeForm();
             if (addEmployeeForm.ShowDialog() == DialogResult.OK && 
                 addEmployeeForm.CreatedEmployee != null)
-=======
-            //TODO: WTF?
-            using var addEmployeeForm = new AddEmployeeForm();
-            if (addEmployeeForm.ShowDialog() == DialogResult.OK)
->>>>>>> 4894a2ea48f9612302c8c0f604a3eb8cae4aafe0
             {
                 _employees.Add(addEmployeeForm.CreatedEmployee);
                 RefreshGrid();
@@ -223,13 +213,8 @@ namespace Lab4
         private void OpenToolStripMenuItem_Click(
             object sender, EventArgs eventArgs)
         {
-<<<<<<< HEAD
             //TODO: WTF? +
             var openFileDialog = new OpenFileDialog();
-=======
-            //TODO: WTF?
-            using var openFileDialog = new OpenFileDialog();
->>>>>>> 4894a2ea48f9612302c8c0f604a3eb8cae4aafe0
             openFileDialog.Filter = "VIKTOR files " +
                 "(*.viktor)|*.viktor|All files (*.*)|*.*";
             openFileDialog.FilterIndex = 1;
@@ -291,13 +276,8 @@ namespace Lab4
                 return;
             }
 
-<<<<<<< HEAD
             //TODO: WTF? +
             var saveFileDialog = new SaveFileDialog();
-=======
-            //TODO: WTF?
-            using var saveFileDialog = new SaveFileDialog();
->>>>>>> 4894a2ea48f9612302c8c0f604a3eb8cae4aafe0
             saveFileDialog.Filter = "VIKTOR files " +
                 "(*.viktor)|*.viktor|All files (*.*)|*.*";
             saveFileDialog.FilterIndex = 1;
