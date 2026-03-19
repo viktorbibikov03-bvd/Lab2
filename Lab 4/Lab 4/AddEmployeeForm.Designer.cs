@@ -56,7 +56,7 @@
             // 
             // TextBoxForName
             // 
-            TextBoxForName.Location = new Point(285, 35);
+            TextBoxForName.Location = new Point(280, 45);
             TextBoxForName.Name = "TextBoxForName";
             TextBoxForName.Size = new Size(378, 31);
             TextBoxForName.TabIndex = 0;
@@ -64,7 +64,7 @@
             // LabelForName
             // 
             LabelForName.AutoSize = true;
-            LabelForName.Location = new Point(45, 38);
+            LabelForName.Location = new Point(45, 48);
             LabelForName.Name = "LabelForName";
             LabelForName.Size = new Size(146, 25);
             LabelForName.TabIndex = 1;
@@ -72,7 +72,7 @@
             // 
             // TextBoxForSurname
             // 
-            TextBoxForSurname.Location = new Point(285, 94);
+            TextBoxForSurname.Location = new Point(280, 95);
             TextBoxForSurname.Name = "TextBoxForSurname";
             TextBoxForSurname.Size = new Size(378, 31);
             TextBoxForSurname.TabIndex = 1;
@@ -80,7 +80,7 @@
             // LabelForSurname
             // 
             LabelForSurname.AutoSize = true;
-            LabelForSurname.Location = new Point(45, 94);
+            LabelForSurname.Location = new Point(45, 98);
             LabelForSurname.Name = "LabelForSurname";
             LabelForSurname.Size = new Size(184, 25);
             LabelForSurname.TabIndex = 3;
@@ -88,18 +88,19 @@
             // 
             // ComboBoxForProfession
             // 
+            ComboBoxForProfession.DropDownStyle = ComboBoxStyle.DropDownList;
             ComboBoxForProfession.FormattingEnabled = true;
-            ComboBoxForProfession.Location = new Point(280, 154);
+            ComboBoxForProfession.Location = new Point(280, 145);
             ComboBoxForProfession.MaximumSize = new Size(500, 0);
             ComboBoxForProfession.MinimumSize = new Size(100, 0);
             ComboBoxForProfession.Name = "ComboBoxForProfession";
-            ComboBoxForProfession.Size = new Size(383, 33);
+            ComboBoxForProfession.Size = new Size(378, 33);
             ComboBoxForProfession.TabIndex = 2;
             // 
             // LabelForProfession
             // 
             LabelForProfession.AutoSize = true;
-            LabelForProfession.Location = new Point(45, 157);
+            LabelForProfession.Location = new Point(44, 148);
             LabelForProfession.Name = "LabelForProfession";
             LabelForProfession.Size = new Size(202, 25);
             LabelForProfession.TabIndex = 5;
@@ -107,16 +108,17 @@
             // 
             // ComboBoxForGender
             // 
+            ComboBoxForGender.DropDownStyle = ComboBoxStyle.DropDownList;
             ComboBoxForGender.FormattingEnabled = true;
-            ComboBoxForGender.Location = new Point(280, 212);
+            ComboBoxForGender.Location = new Point(280, 195);
             ComboBoxForGender.Name = "ComboBoxForGender";
-            ComboBoxForGender.Size = new Size(383, 33);
+            ComboBoxForGender.Size = new Size(378, 33);
             ComboBoxForGender.TabIndex = 3;
             // 
             // LabelForGender
             // 
             LabelForGender.AutoSize = true;
-            LabelForGender.Location = new Point(45, 212);
+            LabelForGender.Location = new Point(45, 198);
             LabelForGender.Name = "LabelForGender";
             LabelForGender.Size = new Size(144, 25);
             LabelForGender.TabIndex = 7;
@@ -125,7 +127,7 @@
             // LabelForAge
             // 
             LabelForAge.AutoSize = true;
-            LabelForAge.Location = new Point(45, 266);
+            LabelForAge.Location = new Point(45, 248);
             LabelForAge.Name = "LabelForAge";
             LabelForAge.Size = new Size(175, 25);
             LabelForAge.TabIndex = 8;
@@ -133,9 +135,9 @@
             // 
             // TextBoxForAge
             // 
-            TextBoxForAge.Location = new Point(280, 263);
+            TextBoxForAge.Location = new Point(280, 245);
             TextBoxForAge.Name = "TextBoxForAge";
-            TextBoxForAge.Size = new Size(383, 31);
+            TextBoxForAge.Size = new Size(378, 31);
             TextBoxForAge.TabIndex = 4;
             // 
             // GroupBoxType
@@ -185,7 +187,7 @@
             // TextBoxForParameter2
             // 
             TextBoxForParameter2.AcceptsTab = true;
-            TextBoxForParameter2.Location = new Point(234, 87);
+            TextBoxForParameter2.Location = new Point(234, 84);
             TextBoxForParameter2.Name = "TextBoxForParameter2";
             TextBoxForParameter2.Size = new Size(150, 31);
             TextBoxForParameter2.TabIndex = 8;
@@ -201,7 +203,7 @@
             // 
             // TextBoxForParameter1
             // 
-            TextBoxForParameter1.Location = new Point(234, 41);
+            TextBoxForParameter1.Location = new Point(234, 38);
             TextBoxForParameter1.Name = "TextBoxForParameter1";
             TextBoxForParameter1.Size = new Size(150, 31);
             TextBoxForParameter1.TabIndex = 7;
@@ -217,9 +219,9 @@
             // 
             // ButtonOk
             // 
-            ButtonOk.Location = new Point(45, 594);
+            ButtonOk.Location = new Point(44, 569);
             ButtonOk.Name = "ButtonOk";
-            ButtonOk.Size = new Size(112, 34);
+            ButtonOk.Size = new Size(130, 50);
             ButtonOk.TabIndex = 9;
             ButtonOk.Text = "ОК";
             ButtonOk.UseVisualStyleBackColor = true;
@@ -227,9 +229,9 @@
             // 
             // ButtonCancel
             // 
-            ButtonCancel.Location = new Point(194, 594);
+            ButtonCancel.Location = new Point(197, 569);
             ButtonCancel.Name = "ButtonCancel";
-            ButtonCancel.Size = new Size(112, 34);
+            ButtonCancel.Size = new Size(130, 50);
             ButtonCancel.TabIndex = 10;
             ButtonCancel.Text = "Отмена";
             ButtonCancel.UseVisualStyleBackColor = true;
@@ -237,9 +239,9 @@
             // 
             // ButtonForGeneration
             // 
-            ButtonForGeneration.Location = new Point(342, 594);
+            ButtonForGeneration.Location = new Point(350, 569);
             ButtonForGeneration.Name = "ButtonForGeneration";
-            ButtonForGeneration.Size = new Size(321, 34);
+            ButtonForGeneration.Size = new Size(320, 50);
             ButtonForGeneration.TabIndex = 12;
             ButtonForGeneration.Text = "Создать случайного сотрудника";
             ButtonForGeneration.UseVisualStyleBackColor = true;
@@ -267,6 +269,7 @@
             Controls.Add(TextBoxForName);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
             MinimumSize = new Size(700, 700);
             Name = "AddEmployeeForm";
             Text = "Добавить сотрудника";

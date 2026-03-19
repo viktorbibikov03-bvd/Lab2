@@ -7,10 +7,16 @@ namespace Lab4
     /// </summary>
     public partial class MainForm : Form
     {
+        //TODO: RSDN +
         /// <summary>
         /// Список сотрудников
         /// </summary>
-        private List<EmployeBase> employees = new List<EmployeBase>();
+        private List<EmployeBase> _employees = new List<EmployeBase>();
+
+        /// <summary>
+        /// Текущий отображаемый список после фильтрации
+        /// </summary>
+        private List<EmployeBase> _currentDisplayList;
 
         /// <summary>
         /// Инициализирует главную форму
@@ -60,14 +66,13 @@ namespace Lab4
         /// <param name="eventArgs">Аргументы события</param>
         private void AddButton_Click(object sender, EventArgs eventArgs)
         {
+            //TODO: WTF? +
             var addEmployeeForm = new AddEmployeeForm();
-            if (addEmployeeForm.ShowDialog() == DialogResult.OK)
+            if (addEmployeeForm.ShowDialog() == DialogResult.OK && 
+                addEmployeeForm.CreatedEmployee != null)
             {
-                if (addEmployeeForm.CreatedEmployee != null)
-                {
-                    employees.Add(addEmployeeForm.CreatedEmployee);
-                    RefreshGrid();
-                }
+                _employees.Add(addEmployeeForm.CreatedEmployee);
+                RefreshGrid();
             }
         }
 
@@ -87,15 +92,76 @@ namespace Lab4
                 return;
             }
 
-            int index = DataGridViewWithEmployees.SelectedRows[0].Index;
-            if (index >= 0 && index < employees.Count)
+            var employeesToRemove = new List<(EmployeBase Employee, 
+                EmployeeDisplayData DisplayData)>();
+
+            foreach (DataGridViewRow row in 
+                DataGridViewWithEmployees.SelectedRows)
             {
-                if (MessageBox.Show("Удалить выбранного сотрудника?",
-                    "Подтверждение", MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question) == DialogResult.Yes)
+                if (row.DataBoundItem is EmployeeDisplayData displayData)
                 {
-                    employees.RemoveAt(index);
-                    RefreshGrid();
+                    var employee = _employees.FirstOrDefault(employee =>
+                        employee.FirstName == displayData.FirstName &&
+                        employee.LastName == displayData.LastName &&
+                        employee.Profession == displayData.Profession &&
+                        employee.Age == displayData.Age);
+
+                    if (employee != null)
+                    {
+                        employeesToRemove.Add((employee, displayData));
+                    }
+                }
+            }
+
+            if (employeesToRemove.Count == 0)
+            {
+                MessageBox.Show("Не удалось определить" +
+                    " выбранных сотрудников!", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string confirmationMessage = employeesToRemove.Count == 1
+                ? $"Удалить сотрудника: " +
+                    $"{employeesToRemove[0].DisplayData.LastName} " +
+                    $"{employeesToRemove[0].DisplayData.FirstName}?"
+                : $"Удалить выбранных сотрудников " +
+                    $"({employeesToRemove.Count} шт.)?";
+
+            if (MessageBox.Show(confirmationMessage, "Подтверждение",
+                    MessageBoxButtons.YesNo, 
+                    MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                foreach (var item in employeesToRemove)
+                {
+                    _employees.Remove(item.Employee);
+                }
+
+                if (_currentDisplayList != null && 
+                    _currentDisplayList != _employees)
+                {
+                    foreach (var item in employeesToRemove)
+                    {
+                        _currentDisplayList.Remove(item.Employee);
+                    }
+                }
+
+                RefreshGrid(_currentDisplayList ?? _employees);
+                if (employeesToRemove.Count == 1)
+                {
+                    MessageBox.Show(
+                    $"Успешно удален сотрудник " +
+                    $"\"{employeesToRemove[0].DisplayData.LastName} " +
+                    $"{employeesToRemove[0].DisplayData.FirstName}\"",
+                    "Информация",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else 
+                {
+                    MessageBox.Show(
+                       $"Сотрудников удалено: {employeesToRemove.Count} ",
+                       "Информация",
+                       MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -108,29 +174,35 @@ namespace Lab4
         private void ButtonForSearch_Click(
             object sender, EventArgs eventArgs)
         {
-            var searchForm = new SearchForm(employees, this);
+            var searchForm = new SearchForm(_employees, (filtered) =>
+            {
+                _currentDisplayList = filtered;
+                RefreshGrid(filtered);
+            });
             searchForm.Show();
         }
 
         /// <summary>
         /// Обновляет таблицу сотрудников данными из источника
         /// </summary>
-        /// <param name="sourse">Источник данных для таблицы</param>
-        public void RefreshGrid(IEnumerable<EmployeBase>? sourse = null)
+        /// <param name="source">Источник данных для таблицы</param>
+        public void RefreshGrid(IEnumerable<EmployeBase>? source = null)
         {
-            var dataSourse = (sourse ?? employees).Select(employee => new
+            var dataSource = (source ?? _employees).Select(
+                employee => new EmployeeDisplayData
             {
-                employee.FirstName,
-                employee.LastName,
-                employee.Profession,
-                employee.Gender,
-                employee.Age,
-                EmployeeType = employee.GetType().Name,
-                Salary = Math.Round(employee.CalculateSalary(), 2)
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                Profession = employee.Profession,
+                Gender = employee.Gender,
+                Age = employee.Age,
+                EmployeeType = GetEmployeeTypeRu(employee),
+                Salary = Math.Round(employee.CalculateSalary(), 2),
+                OriginalEmployee = employee
             }).ToList();
 
             DataGridViewWithEmployees.DataSource = null;
-            DataGridViewWithEmployees.DataSource = dataSourse;
+            DataGridViewWithEmployees.DataSource = dataSource;
         }
 
         /// <summary>
@@ -141,6 +213,7 @@ namespace Lab4
         private void OpenToolStripMenuItem_Click(
             object sender, EventArgs eventArgs)
         {
+            //TODO: WTF? +
             var openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "VIKTOR files " +
                 "(*.viktor)|*.viktor|All files (*.*)|*.*";
@@ -152,7 +225,7 @@ namespace Lab4
             {
                 try
                 {
-                    if (employees.Count > 0)
+                    if (_employees.Count > 0)
                     {
                         var result = MessageBox.Show(
                             "Текущий список сотрудников будет заменен. " +
@@ -168,11 +241,11 @@ namespace Lab4
 
                     var loadedEmployees = EmployeeSerializer.Load(
                         openFileDialog.FileName);
-                    employees = loadedEmployees;
+                    _employees = loadedEmployees;
                     RefreshGrid();
 
                     MessageBox.Show(
-                        $"Загружено {employees.Count} сотрудников",
+                        $"Загружено {_employees.Count} сотрудников",
                         "Информация",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -195,7 +268,7 @@ namespace Lab4
         private void SaveToolStripMenuItem_Click(
             object sender, EventArgs eventArgs)
         {
-            if (employees.Count == 0)
+            if (_employees.Count == 0)
             {
                 MessageBox.Show(
                     "Нет данных для сохранения", "Информация",
@@ -203,7 +276,8 @@ namespace Lab4
                 return;
             }
 
-            using var saveFileDialog = new SaveFileDialog();
+            //TODO: WTF? +
+            var saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "VIKTOR files " +
                 "(*.viktor)|*.viktor|All files (*.*)|*.*";
             saveFileDialog.FilterIndex = 1;
@@ -218,7 +292,7 @@ namespace Lab4
             {
                 try
                 {
-                    EmployeeSerializer.Save(employees, 
+                    EmployeeSerializer.Save(_employees, 
                         saveFileDialog.FileName);
 
                     MessageBox.Show(
@@ -234,6 +308,21 @@ namespace Lab4
                         MessageBoxIcon.Error);
                 }
             }
+        }
+
+        /// <summary>
+        /// Метод для вывода русских типов оплаты
+        /// </summary>
+        /// <param name="employee">Сотрудник</param>
+        /// <returns>Строка с типом оплаты на русском</returns>
+        private string GetEmployeeTypeRu(EmployeBase employee)
+        {
+            return employee switch
+            {
+                SalaryEmployee => "Оклад + процент",
+                WageEmployee => "Почасовая оплата",
+                _ => employee.GetType().Name
+            };
         }
     }
 }

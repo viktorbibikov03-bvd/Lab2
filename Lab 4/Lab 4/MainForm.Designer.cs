@@ -47,11 +47,11 @@
             ButtonForAdd.BackColor = Color.White;
             ButtonForAdd.Cursor = Cursors.Hand;
             ButtonForAdd.ForeColor = SystemColors.ActiveCaptionText;
-            ButtonForAdd.Location = new Point(32, 552);
+            ButtonForAdd.Location = new Point(30, 570);
             ButtonForAdd.Name = "ButtonForAdd";
-            ButtonForAdd.Size = new Size(150, 50);
+            ButtonForAdd.Size = new Size(250, 50);
             ButtonForAdd.TabIndex = 0;
-            ButtonForAdd.Text = "Добавить";
+            ButtonForAdd.Text = "Добавить сотрудника";
             ButtonForAdd.UseVisualStyleBackColor = false;
             ButtonForAdd.Click += AddButton_Click;
             // 
@@ -74,22 +74,22 @@
             // ButtonForDelete
             // 
             ButtonForDelete.BackColor = Color.White;
-            ButtonForDelete.Location = new Point(242, 552);
+            ButtonForDelete.Location = new Point(330, 570);
             ButtonForDelete.Name = "ButtonForDelete";
-            ButtonForDelete.Size = new Size(150, 50);
+            ButtonForDelete.Size = new Size(250, 50);
             ButtonForDelete.TabIndex = 2;
-            ButtonForDelete.Text = "Удалить";
+            ButtonForDelete.Text = "Удалить сотрудника";
             ButtonForDelete.UseVisualStyleBackColor = false;
             ButtonForDelete.Click += ButtonForDelete_Click;
             // 
             // ButtonForSearch
             // 
             ButtonForSearch.BackColor = Color.White;
-            ButtonForSearch.Location = new Point(450, 552);
+            ButtonForSearch.Location = new Point(630, 570);
             ButtonForSearch.Name = "ButtonForSearch";
-            ButtonForSearch.Size = new Size(150, 50);
+            ButtonForSearch.Size = new Size(250, 50);
             ButtonForSearch.TabIndex = 3;
-            ButtonForSearch.Text = "Поиск";
+            ButtonForSearch.Text = "Поиск сотрудника";
             ButtonForSearch.UseVisualStyleBackColor = false;
             ButtonForSearch.Click += ButtonForSearch_Click;
             // 

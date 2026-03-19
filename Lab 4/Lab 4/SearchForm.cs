@@ -11,23 +11,28 @@ namespace Lab4
         /// <summary>
         /// Исходный список сотрудников для поиска
         /// </summary>
-        private List<EmployeBase> _sourceEmployees;
+        private readonly List<EmployeBase> _sourceEmployees;
 
+        //TODO: refactor +
         /// <summary>
-        /// Ссылка на главную форму
+        /// Делегат для обновления результатов поиска
         /// </summary>
-        private MainForm _mainForm;
+        private readonly Action<List<EmployeBase>> _onSearchCompleted;
 
         /// <summary>
         /// Инициализирует форму поиска с исходным списком сотрудников
         /// </summary>
-        /// <param name="source">Исходный список 
-        /// сотрудников для поиска</param>
-        /// <param name="parentForm">Ссылка на главную форму</param>
-        public SearchForm(List<EmployeBase> source, MainForm parentForm)
+        /// <param name="source">Исходный список сотрудников 
+        /// для поиска</param>
+        /// <param name="onSearchCompleted">Делегат для обновления 
+        /// результатов</param>
+        public SearchForm(List<EmployeBase> source, 
+            Action<List<EmployeBase>> onSearchCompleted)
         {
-            _sourceEmployees = source;
-            _mainForm = parentForm;
+            _sourceEmployees = source ?? 
+                throw new ArgumentNullException(nameof(source));
+            _onSearchCompleted = onSearchCompleted ?? 
+                throw new ArgumentNullException(nameof(onSearchCompleted));
             InitializeComponent();
         }
 
@@ -57,7 +62,7 @@ namespace Lab4
                     || employee.Profession.IndexOf(
                         searchProfession, stringComparison) >= 0)).ToList();
 
-            _mainForm.RefreshGrid(filterEmployees);
+            _onSearchCompleted(filterEmployees);
         }
 
         /// <summary>
@@ -71,7 +76,7 @@ namespace Lab4
             TextBoxForSearchName.Clear();
             TextBoxForSearchSurname.Clear();
             TextBoxForSearchProfession.Clear();
-            _mainForm.RefreshGrid(_sourceEmployees);
+            _onSearchCompleted(_sourceEmployees);
         }
 
         /// <summary>

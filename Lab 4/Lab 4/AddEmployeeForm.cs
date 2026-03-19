@@ -65,8 +65,8 @@ namespace Lab4
             });
 
             ComboBoxForGender.Items.AddRange(new object[] {
-                Gender.Male,
-                Gender.Female
+                "Мужской",
+                "Женский"
             });
         }
 
@@ -172,18 +172,14 @@ namespace Lab4
 
                 string genderString = ComboBoxForGender.SelectedItem?.
                     ToString() ?? string.Empty;
-                if (!string.IsNullOrEmpty(genderString) && Enum.TryParse(
-                    typeof(Gender), genderString, out object? gender))
+                employee.Gender = genderString switch
                 {
-                    employee.Gender = (Gender)gender;
-                }
-                else
-                {
-                    employee.Gender = Gender.Male;
-                    throw new IncorrectArgumentException(
+                    "Мужской" => Gender.Male,
+                    "Женский" => Gender.Female,
+                    _ => throw new IncorrectArgumentException(
                         "Необходимо выбрать пол сотрудника " +
-                        "в выпадающем окне!");
-                }
+                        "в выпадающем окне!")
+                };
 
                 string ageString = TextBoxForAge.Text;
                 if (string.IsNullOrEmpty(ageString) ||
@@ -298,6 +294,7 @@ namespace Lab4
         private void ButtonForGeneration_Click(
             object sender, EventArgs eventArgs)
         {
+            const string format = "F2";
             try
             {
                 var random = new Random();
@@ -334,8 +331,10 @@ namespace Lab4
                 TextBoxForSurname.Text = surnamesRu[gender][random.Next(
                     surnamesRu[gender].Length)];
                 ComboBoxForProfession.SelectedItem = profession;
-                ComboBoxForGender.SelectedItem = gender;
-
+                ComboBoxForGender.SelectedItem = gender == Gender.Male 
+                    ? "Мужской" 
+                    : "Женский";
+                
                 int maxAge = gender == Gender.Male 
                     ? 65
                     : 60;
@@ -355,14 +354,15 @@ namespace Lab4
 
                     salary = Math.Round(salary + random.NextDouble(), 2);
 
-                    TextBoxForParameter1.Text = salary.ToString("F2").
+                    //TODO: magic (to const) +
+                    TextBoxForParameter1.Text = salary.ToString(format).
                         Replace(',', '.');
 
                     double commission = random.Next(0, 101);
 
                     commission += Math.Round(random.NextDouble(), 2);
 
-                    TextBoxForParameter2.Text = commission.ToString("F2").
+                    TextBoxForParameter2.Text = commission.ToString(format).
                         Replace(',', '.');
                 }
                 else
@@ -374,14 +374,14 @@ namespace Lab4
                     hourlyRate = Math.Round(hourlyRate + 
                         random.NextDouble(), 2);
 
-                    TextBoxForParameter1.Text = hourlyRate.ToString("F2").
+                    TextBoxForParameter1.Text = hourlyRate.ToString(format).
                         Replace(',', '.');
 
                     double hours = random.Next(0, 116);
 
                     hours = Math.Round(hours + random.NextDouble(), 2);
 
-                    TextBoxForParameter2.Text = hours.ToString("F2").
+                    TextBoxForParameter2.Text = hours.ToString(format).
                         Replace(',', '.');
                 }
 

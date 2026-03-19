@@ -42,7 +42,7 @@
             // LabelForSearchName
             // 
             LabelForSearchName.AutoSize = true;
-            LabelForSearchName.Location = new Point(36, 45);
+            LabelForSearchName.Location = new Point(35, 45);
             LabelForSearchName.Name = "LabelForSearchName";
             LabelForSearchName.Size = new Size(51, 25);
             LabelForSearchName.TabIndex = 0;
@@ -51,7 +51,7 @@
             // LabelForSearchSurname
             // 
             LabelForSearchSurname.AutoSize = true;
-            LabelForSearchSurname.Location = new Point(36, 97);
+            LabelForSearchSurname.Location = new Point(35, 95);
             LabelForSearchSurname.Name = "LabelForSearchSurname";
             LabelForSearchSurname.Size = new Size(89, 25);
             LabelForSearchSurname.TabIndex = 1;
@@ -60,7 +60,7 @@
             // LabelForSearchProfession
             // 
             LabelForSearchProfession.AutoSize = true;
-            LabelForSearchProfession.Location = new Point(36, 151);
+            LabelForSearchProfession.Location = new Point(35, 145);
             LabelForSearchProfession.Name = "LabelForSearchProfession";
             LabelForSearchProfession.Size = new Size(107, 25);
             LabelForSearchProfession.TabIndex = 2;
@@ -68,30 +68,30 @@
             // 
             // TextBoxForSearchName
             // 
-            TextBoxForSearchName.Location = new Point(210, 45);
+            TextBoxForSearchName.Location = new Point(210, 42);
             TextBoxForSearchName.Name = "TextBoxForSearchName";
-            TextBoxForSearchName.Size = new Size(150, 31);
+            TextBoxForSearchName.Size = new Size(306, 31);
             TextBoxForSearchName.TabIndex = 4;
             // 
             // TextBoxForSearchSurname
             // 
-            TextBoxForSearchSurname.Location = new Point(210, 97);
+            TextBoxForSearchSurname.Location = new Point(210, 92);
             TextBoxForSearchSurname.Name = "TextBoxForSearchSurname";
-            TextBoxForSearchSurname.Size = new Size(150, 31);
+            TextBoxForSearchSurname.Size = new Size(306, 31);
             TextBoxForSearchSurname.TabIndex = 5;
             // 
             // TextBoxForSearchProfession
             // 
-            TextBoxForSearchProfession.Location = new Point(210, 151);
+            TextBoxForSearchProfession.Location = new Point(210, 142);
             TextBoxForSearchProfession.Name = "TextBoxForSearchProfession";
-            TextBoxForSearchProfession.Size = new Size(150, 31);
+            TextBoxForSearchProfession.Size = new Size(306, 31);
             TextBoxForSearchProfession.TabIndex = 6;
             // 
             // ButtonForFind
             // 
-            ButtonForFind.Location = new Point(12, 204);
+            ButtonForFind.Location = new Point(12, 232);
             ButtonForFind.Name = "ButtonForFind";
-            ButtonForFind.Size = new Size(112, 34);
+            ButtonForFind.Size = new Size(150, 50);
             ButtonForFind.TabIndex = 8;
             ButtonForFind.Text = "Найти";
             ButtonForFind.UseVisualStyleBackColor = true;
@@ -99,9 +99,9 @@
             // 
             // ButtonForReset
             // 
-            ButtonForReset.Location = new Point(130, 204);
+            ButtonForReset.Location = new Point(189, 232);
             ButtonForReset.Name = "ButtonForReset";
-            ButtonForReset.Size = new Size(112, 34);
+            ButtonForReset.Size = new Size(150, 50);
             ButtonForReset.TabIndex = 9;
             ButtonForReset.Text = "Сброс";
             ButtonForReset.UseVisualStyleBackColor = true;
@@ -109,9 +109,9 @@
             // 
             // ButtonForCancel
             // 
-            ButtonForCancel.Location = new Point(248, 204);
+            ButtonForCancel.Location = new Point(366, 232);
             ButtonForCancel.Name = "ButtonForCancel";
-            ButtonForCancel.Size = new Size(112, 34);
+            ButtonForCancel.Size = new Size(150, 50);
             ButtonForCancel.TabIndex = 10;
             ButtonForCancel.Text = "Отмена";
             ButtonForCancel.UseVisualStyleBackColor = true;
@@ -121,7 +121,7 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(378, 254);
+            ClientSize = new Size(528, 294);
             Controls.Add(ButtonForCancel);
             Controls.Add(ButtonForReset);
             Controls.Add(ButtonForFind);
@@ -132,7 +132,8 @@
             Controls.Add(LabelForSearchSurname);
             Controls.Add(LabelForSearchName);
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            MinimumSize = new Size(400, 310);
+            MaximizeBox = false;
+            MinimumSize = new Size(550, 350);
             Name = "SearchForm";
             Text = "Поиск сотрудника";
             ResumeLayout(false);
