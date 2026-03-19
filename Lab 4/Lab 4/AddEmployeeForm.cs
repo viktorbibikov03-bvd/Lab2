@@ -46,8 +46,8 @@ namespace Lab4
             RadioButtonSalary.CheckedChanged += (sender, evenArgs) =>
                 UpdateParameterLabels();
 
-            #if !DEBUG
-            ButtonForGeneration.Visible = false;
+            #if DEBUG
+                ButtonForGeneration.Visible = true;
             #endif
         }
 
