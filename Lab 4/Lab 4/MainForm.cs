@@ -142,8 +142,8 @@ namespace Lab4
             object sender, EventArgs eventArgs)
         {
             using var openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "JSON files " +
-                "(*.json)|*.json|All files (*.*)|*.*";
+            openFileDialog.Filter = "VIKTOR files " +
+                "(*.viktor)|*.viktor|All files (*.*)|*.*";
             openFileDialog.FilterIndex = 1;
             openFileDialog.RestoreDirectory = true;
             openFileDialog.Title = "Загрузить список сотрудников";
@@ -204,15 +204,15 @@ namespace Lab4
             }
 
             using var saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "JSON files " +
-                "(*.json)|*.json|All files (*.*)|*.*";
+            saveFileDialog.Filter = "VIKTOR files " +
+                "(*.viktor)|*.viktor|All files (*.*)|*.*";
             saveFileDialog.FilterIndex = 1;
             saveFileDialog.RestoreDirectory = true;
             saveFileDialog.Title = "Сохранить список сотрудников";
-            saveFileDialog.DefaultExt = "json";
+            saveFileDialog.DefaultExt = "viktor";
             saveFileDialog.AddExtension = true;
             saveFileDialog.FileName = $"employees_" +
-                $"{DateTime.Now:dd.MM.yyyy_HH.mm.ss}.json";
+                $"{DateTime.Now:dd.MM.yyyy_HH.mm.ss}.viktor";
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
