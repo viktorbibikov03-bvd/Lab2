@@ -242,6 +242,7 @@ namespace Lab4
             return value;
         }
 
+        //TODO: нарушение инкапсуляции
         /// <summary>
         /// Проверка имени и фамилии на корректность
         /// </summary>
@@ -263,6 +264,7 @@ namespace Lab4
                 _checkingEnglish.IsMatch(nameOrSurname);
         }
 
+        //TODO: нарушение инкапсуляции
         /// <summary>
         /// Проверка имени и фамилии на идентичность языка
         /// </summary>
@@ -285,6 +287,7 @@ namespace Lab4
                 _checkingRussian.IsMatch(nameAndSurname);
         }
 
+        //TODO: условная компиляция
         /// <summary>
         /// Обработчик клика по кнопке "Создать случайного сотрудника": 
         /// заполняет поля случайными данными
@@ -354,7 +357,6 @@ namespace Lab4
 
                     salary = Math.Round(salary + random.NextDouble(), 2);
 
-                    //TODO: magic (to const) +
                     TextBoxForParameter1.Text = salary.ToString(format).
                         Replace(',', '.');
 

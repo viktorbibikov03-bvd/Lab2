@@ -236,6 +236,7 @@
             ButtonCancel.Text = "Отмена";
             ButtonCancel.UseVisualStyleBackColor = true;
             ButtonCancel.Click += ButtonCancel_Click;
+            //TODO: условная компиляция
             // 
             // ButtonForGeneration
             // 
@@ -303,6 +304,7 @@
         private Label LabelForParameter2;
         private Button ButtonOk;
         private Button ButtonCancel;
+        //TODO: условная компиляция
         private Button ButtonForGeneration;
     }
 }

@@ -7,7 +7,6 @@ namespace Lab4
     /// </summary>
     public partial class MainForm : Form
     {
-        //TODO: RSDN +
         /// <summary>
         /// Список сотрудников
         /// </summary>
@@ -66,7 +65,6 @@ namespace Lab4
         /// <param name="eventArgs">Аргументы события</param>
         private void AddButton_Click(object sender, EventArgs eventArgs)
         {
-            //TODO: WTF? +
             var addEmployeeForm = new AddEmployeeForm();
             if (addEmployeeForm.ShowDialog() == DialogResult.OK && 
                 addEmployeeForm.CreatedEmployee != null)
@@ -182,6 +180,7 @@ namespace Lab4
             searchForm.Show();
         }
 
+        //TODO: нарушение инкапсуляции
         /// <summary>
         /// Обновляет таблицу сотрудников данными из источника
         /// </summary>
@@ -213,7 +212,6 @@ namespace Lab4
         private void OpenToolStripMenuItem_Click(
             object sender, EventArgs eventArgs)
         {
-            //TODO: WTF? +
             var openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "VIKTOR files " +
                 "(*.viktor)|*.viktor|All files (*.*)|*.*";
@@ -276,7 +274,6 @@ namespace Lab4
                 return;
             }
 
-            //TODO: WTF? +
             var saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "VIKTOR files " +
                 "(*.viktor)|*.viktor|All files (*.*)|*.*";
