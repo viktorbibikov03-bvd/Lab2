@@ -13,6 +13,7 @@ namespace Lab4
         /// </summary>
         private List<EmployeBase> _sourceEmployees;
 
+        //TODO: refactor
         /// <summary>
         /// Ссылка на главную форму
         /// </summary>

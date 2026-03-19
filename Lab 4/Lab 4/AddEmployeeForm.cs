@@ -355,6 +355,7 @@ namespace Lab4
 
                     salary = Math.Round(salary + random.NextDouble(), 2);
 
+                    //TODO: magic (to const)
                     TextBoxForParameter1.Text = salary.ToString("F2").
                         Replace(',', '.');
 

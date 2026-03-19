@@ -7,6 +7,7 @@ namespace Lab4
     /// </summary>
     public partial class MainForm : Form
     {
+        //TODO: RSDN
         /// <summary>
         /// Список сотрудников
         /// </summary>
@@ -60,6 +61,7 @@ namespace Lab4
         /// <param name="eventArgs">Аргументы события</param>
         private void AddButton_Click(object sender, EventArgs eventArgs)
         {
+            //TODO: WTF?
             using var addEmployeeForm = new AddEmployeeForm();
             if (addEmployeeForm.ShowDialog() == DialogResult.OK)
             {
@@ -141,6 +143,7 @@ namespace Lab4
         private void OpenToolStripMenuItem_Click(
             object sender, EventArgs eventArgs)
         {
+            //TODO: WTF?
             using var openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "VIKTOR files " +
                 "(*.viktor)|*.viktor|All files (*.*)|*.*";
@@ -203,6 +206,7 @@ namespace Lab4
                 return;
             }
 
+            //TODO: WTF?
             using var saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "VIKTOR files " +
                 "(*.viktor)|*.viktor|All files (*.*)|*.*";
