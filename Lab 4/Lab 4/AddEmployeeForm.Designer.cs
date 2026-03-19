@@ -49,7 +49,9 @@
             LabelForParameter1 = new Label();
             ButtonOk = new Button();
             ButtonCancel = new Button();
+#if (DEBUG)
             ButtonForGeneration = new Button();
+#endif
             GroupBoxType.SuspendLayout();
             GroupBoxParameters.SuspendLayout();
             SuspendLayout();
@@ -236,7 +238,8 @@
             ButtonCancel.Text = "Отмена";
             ButtonCancel.UseVisualStyleBackColor = true;
             ButtonCancel.Click += ButtonCancel_Click;
-            //TODO: условная компиляция
+            //TODO: условная компиляция +
+#if (DEBUG)
             // 
             // ButtonForGeneration
             // 
@@ -247,13 +250,16 @@
             ButtonForGeneration.Text = "Создать случайного сотрудника";
             ButtonForGeneration.UseVisualStyleBackColor = true;
             ButtonForGeneration.Click += ButtonForGeneration_Click;
+#endif
             // 
             // AddEmployeeForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(678, 644);
+#if (DEBUG)
             Controls.Add(ButtonForGeneration);
+#endif
             Controls.Add(ButtonCancel);
             Controls.Add(ButtonOk);
             Controls.Add(GroupBoxParameters);
@@ -282,7 +288,7 @@
             PerformLayout();
         }
 
-        #endregion
+#endregion
 
         private TextBox TextBoxForName;
         private Label LabelForName;
@@ -304,7 +310,9 @@
         private Label LabelForParameter2;
         private Button ButtonOk;
         private Button ButtonCancel;
-        //TODO: условная компиляция
+        //TODO: условная компиляция +
+#if (DEBUG)
         private Button ButtonForGeneration;
+#endif
     }
 }

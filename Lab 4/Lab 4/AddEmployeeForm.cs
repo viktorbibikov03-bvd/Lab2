@@ -242,13 +242,13 @@ namespace Lab4
             return value;
         }
 
-        //TODO: нарушение инкапсуляции
+        //TODO: нарушение инкапсуляции +
         /// <summary>
         /// Проверка имени и фамилии на корректность
         /// </summary>
         /// <param name="nameOrSurname">Имя или фамилия сотрудника</param>
         /// <returns>true - Данные корректны, false - некорерктны</returns>
-        public bool CheckNameOrSurname(string nameOrSurname)
+        private bool CheckNameOrSurname(string nameOrSurname)
         {
             if (_checkingRussian.IsMatch(nameOrSurname))
             {
@@ -264,7 +264,7 @@ namespace Lab4
                 _checkingEnglish.IsMatch(nameOrSurname);
         }
 
-        //TODO: нарушение инкапсуляции
+        //TODO: нарушение инкапсуляции +
         /// <summary>
         /// Проверка имени и фамилии на идентичность языка
         /// </summary>
@@ -272,7 +272,7 @@ namespace Lab4
         /// <returns>true - Данные корректны, false - некорерктны</returns>
         /// <exception cref="IncorrectArgumentException">Имя и фамилия должны
         /// быть написаны символами одного языка!</exception>
-        public bool CheckNameAndSurname(string nameAndSurname)
+        private bool CheckNameAndSurname(string nameAndSurname)
         {
             if (((_checkingRussian.IsMatch(nameAndSurname)) &&
                 (Flag != FlagLanguage.Russian)) ||
@@ -287,7 +287,8 @@ namespace Lab4
                 _checkingRussian.IsMatch(nameAndSurname);
         }
 
-        //TODO: условная компиляция
+        //TODO: условная компиляция +
+#if (DEBUG)
         /// <summary>
         /// Обработчик клика по кнопке "Создать случайного сотрудника": 
         /// заполняет поля случайными данными
@@ -396,5 +397,6 @@ namespace Lab4
                     "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+#endif
     }
 }

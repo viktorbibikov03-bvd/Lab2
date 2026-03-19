@@ -180,12 +180,13 @@ namespace Lab4
             searchForm.Show();
         }
 
-        //TODO: нарушение инкапсуляции
+
+        //TODO: нарушение инкапсуляции +
         /// <summary>
         /// Обновляет таблицу сотрудников данными из источника
         /// </summary>
         /// <param name="source">Источник данных для таблицы</param>
-        public void RefreshGrid(IEnumerable<EmployeBase>? source = null)
+        private void RefreshGrid(IEnumerable<EmployeBase>? source = null)
         {
             var dataSource = (source ?? _employees).Select(
                 employee => new EmployeeDisplayData
