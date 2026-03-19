@@ -60,7 +60,7 @@ namespace Lab4
         /// <param name="eventArgs">Аргументы события</param>
         private void AddButton_Click(object sender, EventArgs eventArgs)
         {
-            using var addEmployeeForm = new AddEmployeeForm();
+            var addEmployeeForm = new AddEmployeeForm();
             if (addEmployeeForm.ShowDialog() == DialogResult.OK)
             {
                 if (addEmployeeForm.CreatedEmployee != null)
@@ -141,7 +141,7 @@ namespace Lab4
         private void OpenToolStripMenuItem_Click(
             object sender, EventArgs eventArgs)
         {
-            using var openFileDialog = new OpenFileDialog();
+            var openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "VIKTOR files " +
                 "(*.viktor)|*.viktor|All files (*.*)|*.*";
             openFileDialog.FilterIndex = 1;
