@@ -26,7 +26,7 @@ namespace Lab4
         /// <summary>
         /// Поле для флага, которое установлено по умолчанию
         /// </summary>
-        private FlagLanguage Flag = FlagLanguage.Another;
+        private FlagLanguage _flag = FlagLanguage.Another;
 
         /// <summary>
         /// Созданный сотрудник или null, если он не создан
@@ -242,7 +242,6 @@ namespace Lab4
             return value;
         }
 
-        //TODO: нарушение инкапсуляции +
         /// <summary>
         /// Проверка имени и фамилии на корректность
         /// </summary>
@@ -252,19 +251,18 @@ namespace Lab4
         {
             if (_checkingRussian.IsMatch(nameOrSurname))
             {
-                Flag = FlagLanguage.Russian;
+                _flag = FlagLanguage.Russian;
             }
 
             if (_checkingEnglish.IsMatch(nameOrSurname))
             {
-                Flag = FlagLanguage.English;
+                _flag = FlagLanguage.English;
             }
 
             return _checkingRussian.IsMatch(nameOrSurname) ||
                 _checkingEnglish.IsMatch(nameOrSurname);
         }
 
-        //TODO: нарушение инкапсуляции +
         /// <summary>
         /// Проверка имени и фамилии на идентичность языка
         /// </summary>
@@ -275,9 +273,9 @@ namespace Lab4
         private bool CheckNameAndSurname(string nameAndSurname)
         {
             if (((_checkingRussian.IsMatch(nameAndSurname)) &&
-                (Flag != FlagLanguage.Russian)) ||
+                (_flag != FlagLanguage.Russian)) ||
                 ((_checkingEnglish.IsMatch(nameAndSurname)) &&
-                (Flag != FlagLanguage.English)))
+                (_flag != FlagLanguage.English)))
             {
                 throw new IncorrectArgumentException("Имя и фамилия " +
                     "должны быть на одном языке!");
@@ -287,7 +285,6 @@ namespace Lab4
                 _checkingRussian.IsMatch(nameAndSurname);
         }
 
-        //TODO: условная компиляция +
 #if (DEBUG)
         /// <summary>
         /// Обработчик клика по кнопке "Создать случайного сотрудника": 

@@ -5,7 +5,6 @@
 /// </summary>
 public class EmployeeDisplayData
 {
-    //TODO: XML +
     /// <summary>
     /// Свойство для имени сотрудника
     /// </summary>
