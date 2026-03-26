@@ -170,7 +170,7 @@
         public abstract double CalculateSalary();
 
         /// <summary>
-        /// Метод для валидации при диапозонах
+        /// Метод для валидации при диапазонах
         /// </summary>
         /// <param name="value">Число, которое обрабатывается</param>
         /// <param name="fieldName">Название обрадатываемого значения</param>
@@ -179,7 +179,7 @@
         /// <param name="customMessage">Сообщение исключения</param>
         /// <exception cref="IncorrectArgumentException">Ошибки при валидации
         /// </exception>
-        public void ValidateRange(double value, string fieldName,
+        protected void ValidateRange(double value, string fieldName,
             int minValue, int maxValue, string customMessage = null)
         {
             if (value < minValue || value > maxValue)
