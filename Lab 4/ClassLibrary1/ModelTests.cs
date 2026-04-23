@@ -5,7 +5,7 @@ using NUnit.Framework.Legacy;
 namespace ModelTests
 {
     /// <summary>
-    /// Класс для проведения модульных тестов компонентов модели сотрудников
+    /// Класс для проведения модульных тестов
     /// </summary>
     [TestFixture]
     public class ModelTests
@@ -13,931 +13,667 @@ namespace ModelTests
         #region Tests for FirstName
 
         /// <summary>
-        /// Проверяет, что корректное имя устанавливается в свойство 
-        /// FirstName и автоматически форматируется 
-        /// (первая буква заглавная, остальные строчные)
+        /// Проверяет установку и форматирование корректных 
+        /// имён в свойство FirstName
         /// </summary>
-        [Test]
-        public void FirstName_ValidValue_SetsCorrectly()
+        /// <param name="input">Входное значение имени</param>
+        /// <param name="expected">Ожидаемое 
+        /// отформатированное значение</param>
+        [TestCase("иван", "Иван", TestName = "Тест форматирования имени " +
+            "при вводе русский символов нижнего регистра")]
+        [TestCase("ИВАН", "Иван", TestName = "Тест форматирования имени " +
+            "при вводе русский символов верхнего регистра")]
+        [TestCase("мария александровна", "Мария Александровна", TestName = 
+            "Тест форматирования имени при вводе имени и отчества")]
+        [TestCase("alex", "Alex", TestName = "Тест форматирования имени " +
+            "при вводе латинских символов нижнего регистра")]
+        [TestCase("ALEX", "Alex", TestName = "Тест форматирования имени " +
+            "при вводе латинских символов верхнего регистра")]
+        public void FirstName_ValidValue_FormattedCorrectly(
+            string input, string expected)
         {
-            // Arrange
             var employee = new SalaryEmployee();
-            const string expected = "Иван";
 
-            // Act
-            employee.FirstName = "иван";
+            employee.FirstName = input;
 
-            // Assert
             ClassicAssert.AreEqual(expected, employee.FirstName);
         }
 
         /// <summary>
-        /// Проверяет, что попытка установить пустую строку в свойство 
-        /// FirstName, выбрасывает исключение IncorrectArgumentException
+        /// Проверяет выбрасывание исключения 
+        /// при некорректных значениях для FirstName
         /// </summary>
-        [Test]
-        public void FirstName_EmptyString_ThrowsException()
+        /// <param name="invalidValue">Некорректное значение</param>
+        [TestCase(null, TestName = "Тест на null в имени")]
+        [TestCase("", TestName = "Тест на Empty в имени")]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 
+            TestName = "Тест имени длиной более 30 символов")]
+        public void FirstName_InvalidValue_ThrowsException(
+            string invalidValue)
         {
-            // Arrange
             var employee = new SalaryEmployee();
 
-            // Act & Assert
             ClassicAssert.Throws<IncorrectArgumentException>(
-                () => employee.FirstName = string.Empty);
+                () => employee.FirstName = invalidValue);
         }
 
-        /// <summary>
-        /// Проверяет, что попытка установить значение null в свойство 
-        /// FirstName выбрасывает исключение IncorrectArgumentException
-        /// </summary>
-        [Test]
-        public void FirstName_NullValue_ThrowsException()
-        {
-            // Arrange
-            var employee = new SalaryEmployee();
-
-            // Act & Assert
-            ClassicAssert.Throws<IncorrectArgumentException>(
-                () => employee.FirstName = null);
-        }
-
-        /// <summary>
-        /// Проверяет, что имя длиннее максимального допустимого значения 
-        /// вызывает исключение при установке в свойство FirstName
-        /// </summary>
-        [Test]
-        public void FirstName_ExceedsMaxLength_ThrowsException()
-        {
-            // Arrange
-            var employee = new SalaryEmployee();
-            string longName = new string('a', 31);
-
-            // Act & Assert
-            ClassicAssert.Throws<IncorrectArgumentException>(
-                () => employee.FirstName = longName);
-        }
         #endregion
 
         #region Tests for LastName
 
         /// <summary>
-        /// Проверяет, что корректная фамилия устанавливается в свойство 
-        /// LastName и форматируется в соответствии с правилами (TitleCase)
+        /// Проверяет установку и форматирование 
+        /// корректных фамилий в свойство LastName
         /// </summary>
-        [Test]
-        public void LastName_ValidValue_SetsCorrectly()
+        /// <param name="input">Входное значение фамилии</param>
+        /// <param name="expected">Ожидаемое 
+        /// отформатированное значение</param>
+        [TestCase("петров", "Петров", TestName = "Тест форматирования " +
+            "фамилии при вводе русский символов нижнего регистра")]
+        [TestCase("СМИРНОВ", "Смирнов", TestName = "Тест форматирования " +
+            "фамилии при вводе русский символов нижнего регистра")]
+        [TestCase("ivanov", "Ivanov", TestName = "Тест форматирования " +
+            "фамилии при вводе латинских символов нижнего регистра")]
+        [TestCase("IVANOV", "Ivanov", TestName = "Тест форматирования " +
+            "фамилии при вводе латинских символов верхнего регистра")]
+        public void LastName_ValidValue_FormattedCorrectly(
+            string input, string expected)
         {
-            // Arrange
             var employee = new WageEmployee();
-            const string expected = "Петров";
 
-            // Act
-            employee.LastName = "петров";
+            employee.LastName = input;
 
-            // Assert
             ClassicAssert.AreEqual(expected, employee.LastName);
         }
 
         /// <summary>
-        /// Проверяет, что пустая строка в свойстве LastName 
-        /// вызывает исключение IncorrectArgumentException
+        /// Проверяет выбрасывание исключения при 
+        /// некорректных значениях для LastName
         /// </summary>
-        [Test]
-        public void LastName_EmptyString_ThrowsException()
+        /// <param name="invalidValue">Некорректное значение</param>
+        [TestCase(null, TestName = "Тест на null в фамилии")]
+        [TestCase("", TestName = "Тест на Empty в фамилии")]
+        [TestCase("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")]
+        public void LastName_InvalidValue_ThrowsException(
+            string invalidValue)
         {
-            // Arrange
             var employee = new WageEmployee();
 
-            // Act & Assert
             ClassicAssert.Throws<IncorrectArgumentException>(
-                () => employee.LastName = string.Empty);
+                () => employee.LastName = invalidValue);
         }
 
-        /// <summary>
-        /// Проверяет, что имя длиннее максимального допустимого значения 
-        /// вызывает исключение при установке в свойство LastName
-        /// </summary>
-        [Test]
-        public void LastName_ExceedsMaxLength_ThrowsException()
-        {
-            // Arrange
-            var employee = new WageEmployee();
-            string longName = new string('b', 35);
-
-            // Act & Assert
-            ClassicAssert.Throws<IncorrectArgumentException>(
-                () => employee.LastName = longName);
-        }
         #endregion
 
         #region Tests for Age
 
         /// <summary>
-        /// Проверяет установку корректного возраста для сотрудника мужского 
-        /// пола в допустимом диапазоне от 18 до 65 лет
+        /// Данные для тестов валидного возраста: (пол, возраст, описание теста)
         /// </summary>
-        [Test]
-        public void Age_ValidValue_Male_SetsCorrectly()
+        public static IEnumerable<TestCaseData> ValidAgeCases
         {
-            // Arrange
-            var employee = new SalaryEmployee
+            get
             {
-                Gender = Gender.Male
-            };
-            const int expectedAge = 45;
-
-            // Act
-            employee.Age = expectedAge;
-
-            // Assert
-            ClassicAssert.AreEqual(expectedAge, employee.Age);
+                yield return new TestCaseData(Gender.Male, 18, "Male_MinBoundary").SetName("Age_Male_MinBoundary_Accepted");
+                yield return new TestCaseData(Gender.Male, 45, "Male_Valid").SetName("Age_Male_ValidValue_Accepted");
+                yield return new TestCaseData(Gender.Male, 65, "Male_MaxBoundary").SetName("Age_Male_MaxBoundary_Accepted");
+                yield return new TestCaseData(Gender.Female, 18, "Female_MinBoundary").SetName("Age_Female_MinBoundary_Accepted");
+                yield return new TestCaseData(Gender.Female, 50, "Female_Valid").SetName("Age_Female_ValidValue_Accepted");
+                yield return new TestCaseData(Gender.Female, 60, "Female_MaxBoundary").SetName("Age_Female_MaxBoundary_Accepted");
+            }
         }
 
         /// <summary>
-        /// Проверяет установку корректного возраста для сотрудника женского 
-        /// пола в допустимом диапазоне от 18 до 60 лет
+        /// Проверяет установку корректного возраста в зависимости от пола сотрудника
         /// </summary>
-        [Test]
-        public void Age_ValidValue_Female_SetsCorrectly()
+        /// <param name="gender">Пол сотрудника</param>
+        /// <param name="age">Значение возраста</param>
+        /// <param name="description">Описание сценария (для отладки)</param>
+        [TestCaseSource(nameof(ValidAgeCases))]
+        public void Age_ValidValue_SetsCorrectly(Gender gender, int age, string description)
         {
-            // Arrange
-            var employee = new WageEmployee
-            {
-                Gender = Gender.Female
+            var employee = new SalaryEmployee 
+            { 
+                Gender = gender 
             };
-            const int expectedAge = 55;
 
-            // Act
-            employee.Age = expectedAge;
+            employee.Age = age;
 
-            // Assert
-            ClassicAssert.AreEqual(expectedAge, employee.Age);
+            ClassicAssert.AreEqual(age, employee.Age);
         }
 
         /// <summary>
-        /// Проверяет, что возраст младше минимального порога (18 лет)
-        /// вызывает исключение при установке
+        /// Данные для тестов невалидного возраста
         /// </summary>
-        [Test]
-        public void Age_BelowMinAge_ThrowsException()
+        public static IEnumerable<TestCaseData> InvalidAgeCases
         {
-            // Arrange
-            var employee = new SalaryEmployee
+            get
             {
-                Gender = Gender.Male
-            };
+                yield return new TestCaseData(Gender.Male, 17, "BelowMin").SetName("Age_BelowMinAge_ThrowsException");
+                yield return new TestCaseData(Gender.Male, 66, "AboveRetirementMale").SetName("Age_Male_AboveRetirement_ThrowsException");
+                yield return new TestCaseData(Gender.Female, 61, "AboveRetirementFemale").SetName("Age_Female_AboveRetirement_ThrowsException");
+                yield return new TestCaseData(Gender.Male, -5, "Negative").SetName("Age_NegativeValue_ThrowsException");
+            }
+        }
 
-            // Act & Assert
+        /// <summary>
+        /// Проверяет выбрасывание исключения при некорректном возрасте
+        /// </summary>
+        /// <param name="gender">Пол сотрудника</param>
+        /// <param name="age">Некорректное значение возраста</param>
+        /// <param name="description">Описание сценария</param>
+        [TestCaseSource(nameof(InvalidAgeCases))]
+        public void Age_InvalidValue_ThrowsException(Gender gender, int age, string description)
+        {
+            var employee = new SalaryEmployee { Gender = gender };
+
             ClassicAssert.Throws<IncorrectArgumentException>(
-                () => employee.Age = 17);
+                () => employee.Age = age);
         }
 
-        /// <summary>
-        /// Проверяет, что возраст старше пенсионного для мужчин (65 лет)
-        /// вызывает исключение при установке
-        /// </summary>
-        [Test]
-        public void Age_AboveRetirementAge_Male_ThrowsException()
-        {
-            // Arrange
-            var employee = new SalaryEmployee
-            {
-                Gender = Gender.Male
-            };
-
-            // Act & Assert
-            ClassicAssert.Throws<IncorrectArgumentException>(
-                () => employee.Age = 66);
-        }
-
-        /// <summary>
-        /// Проверяет, что возраст старше пенсионного для женщин (60 лет)
-        /// вызывает исключение при установке
-        /// </summary>
-        [Test]
-        public void Age_AboveRetirementAge_Female_ThrowsException()
-        {
-            // Arrange
-            var employee = new WageEmployee
-            {
-                Gender = Gender.Female
-            };
-
-            // Act & Assert
-            ClassicAssert.Throws<IncorrectArgumentException>(
-                () => employee.Age = 61);
-        }
-
-        /// <summary>
-        /// Проверяет принятие минимального граничного 
-        /// значения возраста (18 лет)
-        /// </summary>
-        [Test]
-        public void Age_MinBoundaryValue_Accepted()
-        {
-            // Arrange
-            var employee = new SalaryEmployee
-            {
-                Gender = Gender.Male
-            };
-
-            // Act
-            employee.Age = 18;
-
-            // Assert
-            ClassicAssert.AreEqual(18, employee.Age);
-        }
-
-        /// <summary>
-        /// Проверяет принятие максимального граничного значения
-        /// возраста для мужчин (65 лет)
-        /// </summary>
-        [Test]
-        public void Age_MaxBoundaryValue_Male_Accepted()
-        {
-            // Arrange
-            var employee = new SalaryEmployee
-            {
-                Gender = Gender.Male
-            };
-
-            // Act
-            employee.Age = 65;
-
-            // Assert
-            ClassicAssert.AreEqual(65, employee.Age);
-        }
-
-        /// <summary>
-        /// Проверяет принятие максимального граничного значения 
-        /// возраста для женщин (60 лет)
-        /// </summary>
-        [Test]
-        public void Age_MaxBoundaryValue_Female_Accepted()
-        {
-            // Arrange
-            var employee = new WageEmployee
-            {
-                Gender = Gender.Female
-            };
-
-            // Act
-            employee.Age = 60;
-
-            // Assert
-            ClassicAssert.AreEqual(60, employee.Age);
-        }
         #endregion
 
-        #region Tests for Profession
+        #region Параметризованные тесты для свойства Profession
 
         /// <summary>
-        /// Проверяет, что корректное название профессии 
-        /// устанавливается в свойство Profession
-        /// и форматируется в стиле TitleCase
+        /// Проверяет установку и форматирование корректных профессий
         /// </summary>
-        [Test]
-        public void Profession_ValidValue_SetsCorrectly()
+        /// <param name="input">Входное значение профессии</param>
+        /// <param name="expected">Ожидаемое отформатированное значение</param>
+        [TestCase("программист", "Программист")]
+        [TestCase("МЕНЕДЖЕР ПРОЕКТОВ", "Менеджер Проектов")]
+        [TestCase("designer", "Designer")]
+        public void Profession_ValidValue_FormattedCorrectly(string input, string expected)
         {
-            // Arrange
             var employee = new SalaryEmployee();
-            const string expected = "Программист";
 
-            // Act
-            employee.Profession = "программист";
+            employee.Profession = input;
 
-            // Assert
             ClassicAssert.AreEqual(expected, employee.Profession);
         }
 
         /// <summary>
-        /// Проверяет, что пустая строка в свойстве Profession 
-        /// вызывает исключение
+        /// Проверяет выбрасывание исключения при некорректных значениях профессии
         /// </summary>
-        [Test]
-        public void Profession_EmptyString_ThrowsException()
+        /// <param name="invalidValue">Некорректное значение</param>
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")]
+        public void Profession_InvalidValue_ThrowsException(string invalidValue)
         {
-            // Arrange
             var employee = new WageEmployee();
 
-            // Act & Assert
             ClassicAssert.Throws<IncorrectArgumentException>(
-                () => employee.Profession = string.Empty);
+                () => employee.Profession = invalidValue);
         }
 
-        /// <summary>
-        /// Проверяет, что профессия длиннее 30 символов вызывает исключение
-        /// </summary>
-        [Test]
-        public void Profession_ExceedsMaxLength_ThrowsException()
-        {
-            // Arrange
-            var employee = new WageEmployee();
-            string longProfession = new string('x', 31);
-
-            // Act & Assert
-            ClassicAssert.Throws<IncorrectArgumentException>(
-                () => employee.Profession = longProfession);
-        }
         #endregion
 
-        #region Tests for SalaryEmployee
+        #region Параметризованные тесты для SalaryEmployee.Salary
 
         /// <summary>
-        /// Проверяет установку корректного значения оклада в свойство Salary
+        /// Данные для тестов валидного оклада: (значение, описание)
         /// </summary>
-        [Test]
-        public void Salary_ValidValue_SetsCorrectly()
+        public static IEnumerable<TestCaseData> ValidSalaryCases
         {
-            // Arrange
-            var employee = new SalaryEmployee();
-            const double expectedSalary = 75000;
-
-            // Act
-            employee.Salary = expectedSalary;
-
-            // Assert
-            ClassicAssert.AreEqual(expectedSalary, employee.Salary);
-        }
-
-        /// <summary>
-        /// Проверяет, что нулевое значение оклада является допустимым
-        /// </summary>
-        [Test]
-        public void Salary_ZeroValue_Accepted()
-        {
-            // Arrange
-            var employee = new SalaryEmployee();
-
-            // Act
-            employee.Salary = 0;
-
-            // Assert
-            ClassicAssert.AreEqual(0, employee.Salary);
-        }
-
-        /// <summary>
-        /// Проверяет принятие максимального граничного 
-        /// значения оклада (200 000 ₽)
-        /// </summary>
-        [Test]
-        public void Salary_MaxBoundaryValue_Accepted()
-        {
-            // Arrange
-            var employee = new SalaryEmployee();
-
-            // Act
-            employee.Salary = 200000;
-
-            // Assert
-            ClassicAssert.AreEqual(200000, employee.Salary);
-        }
-
-        /// <summary>
-        /// Проверяет, что оклад, превышающий максимальный лимит (200 000 ₽),
-        /// вызывает исключение при установке
-        /// </summary>
-        [Test]
-        public void Salary_ExceedsMaxValue_ThrowsException()
-        {
-            // Arrange
-            var employee = new SalaryEmployee();
-
-            // Act & Assert
-            ClassicAssert.Throws<IncorrectArgumentException>(
-                () => employee.Salary = 200001);
-        }
-
-        /// <summary>
-        /// Проверяет, что отрицательное значение оклада вызывает исключение
-        /// </summary>
-        [Test]
-        public void Salary_NegativeValue_ThrowsException()
-        {
-            // Arrange
-            var employee = new SalaryEmployee();
-
-            // Act & Assert
-            ClassicAssert.Throws<IncorrectArgumentException>(
-                () => employee.Salary = -1000);
-        }
-
-        /// <summary>
-        /// Проверяет установку корректного процента комиссионных 
-        /// в свойство Commission
-        /// </summary>
-        [Test]
-        public void Commission_ValidValue_SetsCorrectly()
-        {
-            // Arrange
-            var employee = new SalaryEmployee();
-            const double expectedCommission = 15.5;
-
-            // Act
-            employee.Commission = expectedCommission;
-
-            // Assert
-            ClassicAssert.AreEqual(expectedCommission, employee.Commission);
-        }
-
-        /// <summary>
-        /// Проверяет, что нулевое значение процента 
-        /// комиссионных является допустимым
-        /// </summary>
-        [Test]
-        public void Commission_ZeroValue_Accepted()
-        {
-            // Arrange
-            var employee = new SalaryEmployee();
-
-            // Act
-            employee.Commission = 0;
-
-            // Assert
-            ClassicAssert.AreEqual(0, employee.Commission);
-        }
-
-        /// <summary>
-        /// Проверяет принятие максимального граничного 
-        /// значения комиссионных (100%)
-        /// </summary>
-        [Test]
-        public void Commission_MaxBoundaryValue_Accepted()
-        {
-            // Arrange
-            var employee = new SalaryEmployee();
-
-            // Act
-            employee.Commission = 100;
-
-            // Assert
-            ClassicAssert.AreEqual(100, employee.Commission);
-        }
-
-        /// <summary>
-        /// Проверяет, что процент комиссионных свыше 
-        /// 100% вызывает исключение
-        /// </summary>
-        [Test]
-        public void Commission_ExceedsMaxValue_ThrowsException()
-        {
-            // Arrange
-            var employee = new SalaryEmployee();
-
-            // Act & Assert
-            ClassicAssert.Throws<IncorrectArgumentException>(
-                () => employee.Commission = 101);
-        }
-
-        /// <summary>
-        /// Проверяет, что отрицательное значение процента 
-        /// комиссионных вызывает исключение
-        /// </summary>
-        [Test]
-        public void Commission_NegativeValue_ThrowsException()
-        {
-            // Arrange
-            var employee = new SalaryEmployee();
-
-            // Act & Assert
-            ClassicAssert.Throws<IncorrectArgumentException>(
-                () => employee.Commission = -5);
-        }
-
-        /// <summary>
-        /// Проверяет расчёт зарплаты при нулевом проценте комиссионных:
-        /// результат должен быть равен базовому окладу
-        /// </summary>
-        [Test]
-        public void CalculateSalary_WithZeroCommission_ReturnsBaseSalary()
-        {
-            // Arrange
-            var employee = new SalaryEmployee
+            get
             {
-                Salary = 50000,
-                Commission = 0
-            };
-            const double expected = 50000;
-
-            // Act
-            var result = employee.CalculateSalary();
-
-            // Assert
-            ClassicAssert.AreEqual(expected, result);
+                yield return new TestCaseData(0, "Zero").SetName("Salary_ZeroValue_Accepted");
+                yield return new TestCaseData(50000, "Valid").SetName("Salary_ValidValue_Accepted");
+                yield return new TestCaseData(200000, "MaxBoundary").SetName("Salary_MaxBoundaryValue_Accepted");
+            }
         }
 
         /// <summary>
-        /// Проверяет корректность расчёта зарплаты с учётом комиссионных
+        /// Проверяет установку корректных значений оклада
         /// </summary>
-        [Test]
-        public void CalculateSalary_WithCommission_CalculatedCorrectly()
+        /// <param name="salary">Значение оклада</param>
+        /// <param name="description">Описание сценария</param>
+        [TestCaseSource(nameof(ValidSalaryCases))]
+        public void Salary_ValidValue_SetsCorrectly(double salary, string description)
         {
-            // Arrange
-            var employee = new SalaryEmployee
-            {
-                Salary = 40000,
-                Commission = 25
-            };
-            const double expected = 50000; //40000 * 1,25
+            var employee = new SalaryEmployee();
 
-            // Act
-            var result = employee.CalculateSalary();
+            employee.Salary = salary;
 
-            // Assert
-            ClassicAssert.AreEqual(expected, result);
+            ClassicAssert.AreEqual(salary, employee.Salary);
         }
 
         /// <summary>
-        /// Проверяет расчёт зарплаты при максимальном проценте комиссионных
+        /// Данные для тестов невалидного оклада: (значение, описание)
         /// </summary>
-        [Test]
-        public void CalculateSalary_WithMaxCommission_CalculatedCorrectly()
+        public static IEnumerable<TestCaseData> InvalidSalaryCases
         {
-            // Arrange
-            var employee = new SalaryEmployee
+            get
             {
-                Salary = 100000,
-                Commission = 100
-            };
-            const double expected = 100000 * (1 + 100 / 100);
-
-            // Act
-            var result = employee.CalculateSalary();
-
-            // Assert
-            ClassicAssert.AreEqual(expected, result);
+                yield return new TestCaseData(-1, "Negative").SetName("Salary_NegativeValue_ThrowsException");
+                yield return new TestCaseData(200001, "ExceedsMax").SetName("Salary_ExceedsMaxValue_ThrowsException");
+            }
         }
+
+        /// <summary>
+        /// Проверяет выбрасывание исключения при некорректном окладе
+        /// </summary>
+        /// <param name="salary">Некорректное значение оклада</param>
+        /// <param name="description">Описание сценария</param>
+        [TestCaseSource(nameof(InvalidSalaryCases))]
+        public void Salary_InvalidValue_ThrowsException(double salary, string description)
+        {
+            var employee = new SalaryEmployee();
+
+            ClassicAssert.Throws<IncorrectArgumentException>(
+                () => employee.Salary = salary);
+        }
+
         #endregion
 
-        #region Tests for WageEmployee
+        #region Параметризованные тесты для SalaryEmployee.Commission
 
         /// <summary>
-        /// Проверяет установку корректного количества отработанных часов 
-        /// в свойство HourCount
+        /// Данные для тестов валидного процента комиссионных
         /// </summary>
-        [Test]
-        public void HourCount_ValidValue_SetsCorrectly()
+        public static IEnumerable<TestCaseData> ValidCommissionCases
         {
-            // Arrange
-            var employee = new WageEmployee();
-            const double expectedHours = 80.5;
-
-            // Act
-            employee.HourCount = expectedHours;
-
-            // Assert
-            ClassicAssert.AreEqual(expectedHours, employee.HourCount);
+            get
+            {
+                yield return new TestCaseData(0, "Zero").SetName("Commission_ZeroValue_Accepted");
+                yield return new TestCaseData(15.5, "Valid").SetName("Commission_ValidValue_Accepted");
+                yield return new TestCaseData(100, "MaxBoundary").SetName("Commission_MaxBoundaryValue_Accepted");
+            }
         }
 
         /// <summary>
-        /// Проверяет, что нулевое количество часов является 
-        /// допустимым значением
+        /// Проверяет установку корректных значений процента комиссионных
         /// </summary>
-        [Test]
-        public void HourCount_ZeroValue_Accepted()
+        [TestCaseSource(nameof(ValidCommissionCases))]
+        public void Commission_ValidValue_SetsCorrectly(double commission, string description)
         {
-            // Arrange
-            var employee = new WageEmployee();
+            var employee = new SalaryEmployee();
 
-            // Act
-            employee.HourCount = 0;
+            employee.Commission = commission;
 
-            // Assert
-            ClassicAssert.AreEqual(0, employee.HourCount);
+            ClassicAssert.AreEqual(commission, employee.Commission);
         }
 
         /// <summary>
-        /// Проверяет принятие максимального граничного 
-        /// значения часов в месяц
+        /// Данные для тестов невалидного процента комиссионных
         /// </summary>
-        [Test]
-        public void HourCount_MaxBoundaryValue_Accepted()
+        public static IEnumerable<TestCaseData> InvalidCommissionCases
         {
-            // Arrange
-            var employee = new WageEmployee();
-
-            // Act
-            employee.HourCount = 115;
-
-            // Assert
-            ClassicAssert.AreEqual(115, employee.HourCount);
+            get
+            {
+                yield return new TestCaseData(-0.1, "Negative").SetName("Commission_NegativeValue_ThrowsException");
+                yield return new TestCaseData(100.1, "ExceedsMax").SetName("Commission_ExceedsMaxValue_ThrowsException");
+            }
         }
 
         /// <summary>
-        /// Проверяет, что количество часов свыше лимита вызывает исключение
+        /// Проверяет выбрасывание исключения при некорректном проценте комиссионных
         /// </summary>
-        [Test]
-        public void HourCount_ExceedsMaxValue_ThrowsException()
+        [TestCaseSource(nameof(InvalidCommissionCases))]
+        public void Commission_InvalidValue_ThrowsException(double commission, string description)
         {
-            // Arrange
-            var employee = new WageEmployee();
+            var employee = new SalaryEmployee();
 
-            // Act & Assert
             ClassicAssert.Throws<IncorrectArgumentException>(
-                () => employee.HourCount = 116);
+                () => employee.Commission = commission);
+        }
+
+        #endregion
+
+        #region Параметризованные тесты для SalaryEmployee.CalculateSalary
+
+        /// <summary>
+        /// Данные для тестов расчёта зарплаты: (оклад, комиссия, ожидаемый результат, описание)
+        /// </summary>
+        public static IEnumerable<TestCaseData> SalaryCalculationCases
+        {
+            get
+            {
+                yield return new TestCaseData(50000, 0, 50000, "ZeroCommission").SetName("CalculateSalary_ZeroCommission_ReturnsBaseSalary");
+                yield return new TestCaseData(40000, 25, 50000, "WithCommission25").SetName("CalculateSalary_WithCommission25_CalculatedCorrectly");
+                yield return new TestCaseData(100000, 100, 200000, "MaxCommission").SetName("CalculateSalary_WithMaxCommission_DoublesSalary");
+                yield return new TestCaseData(75000, 10.5, 82875, "FractionalCommission").SetName("CalculateSalary_WithFractionalCommission_CalculatedCorrectly");
+            }
         }
 
         /// <summary>
-        /// Проверяет, что отрицательное количество часов вызывает исключение
+        /// Проверяет корректность расчёта зарплаты по формуле: Salary × (1 + Commission / 100)
         /// </summary>
-        [Test]
-        public void HourCount_NegativeValue_ThrowsException()
+        /// <param name="salary">Базовый оклад</param>
+        /// <param name="commission">Процент комиссионных</param>
+        /// <param name="expected">Ожидаемый результат расчёта</param>
+        /// <param name="description">Описание сценария</param>
+        [TestCaseSource(nameof(SalaryCalculationCases))]
+        public void CalculateSalary_SalaryEmployee_CalculatedCorrectly(
+            double salary, double commission, double expected, string description)
         {
-            // Arrange
+            var employee = new SalaryEmployee
+            {
+                Salary = salary,
+                Commission = commission
+            };
+
+            var result = employee.CalculateSalary();
+
+            ClassicAssert.AreEqual(expected, result, 0.01,
+                $"Расчёт не совпадает для сценария: {description}");
+        }
+
+        #endregion
+
+        #region Параметризованные тесты для WageEmployee.HourCount
+
+        /// <summary>
+        /// Данные для тестов валидного количества часов
+        /// </summary>
+        public static IEnumerable<TestCaseData> ValidHourCountCases
+        {
+            get
+            {
+                yield return new TestCaseData(0, "Zero").SetName("HourCount_ZeroValue_Accepted");
+                yield return new TestCaseData(80.5, "Valid").SetName("HourCount_ValidValue_Accepted");
+                yield return new TestCaseData(115, "MaxBoundary").SetName("HourCount_MaxBoundaryValue_Accepted");
+            }
+        }
+
+        /// <summary>
+        /// Проверяет установку корректного количества отработанных часов
+        /// </summary>
+        [TestCaseSource(nameof(ValidHourCountCases))]
+        public void HourCount_ValidValue_SetsCorrectly(double hours, string description)
+        {
             var employee = new WageEmployee();
 
-            // Act & Assert
+            employee.HourCount = hours;
+
+            ClassicAssert.AreEqual(hours, employee.HourCount);
+        }
+
+        /// <summary>
+        /// Данные для тестов невалидного количества часов
+        /// </summary>
+        public static IEnumerable<TestCaseData> InvalidHourCountCases
+        {
+            get
+            {
+                yield return new TestCaseData(-1, "Negative").SetName("HourCount_NegativeValue_ThrowsException");
+                yield return new TestCaseData(116, "ExceedsMax").SetName("HourCount_ExceedsMaxValue_ThrowsException");
+            }
+        }
+
+        /// <summary>
+        /// Проверяет выбрасывание исключения при некорректном количестве часов
+        /// </summary>
+        [TestCaseSource(nameof(InvalidHourCountCases))]
+        public void HourCount_InvalidValue_ThrowsException(double hours, string description)
+        {
+            var employee = new WageEmployee();
+
             ClassicAssert.Throws<IncorrectArgumentException>(
-                () => employee.HourCount = -10);
+                () => employee.HourCount = hours);
+        }
+
+        #endregion
+
+        #region Параметризованные тесты для WageEmployee.Wage
+
+        /// <summary>
+        /// Данные для тестов валидной почасовой ставки
+        /// </summary>
+        public static IEnumerable<TestCaseData> ValidWageCases
+        {
+            get
+            {
+                yield return new TestCaseData(0, "Zero").SetName("Wage_ZeroValue_Accepted");
+                yield return new TestCaseData(500.75, "Valid").SetName("Wage_ValidValue_Accepted");
+                yield return new TestCaseData(2000, "MaxBoundary").SetName("Wage_MaxBoundaryValue_Accepted");
+            }
         }
 
         /// <summary>
-        /// Проверяет установку корректной почасовой ставки в свойство Wage
+        /// Проверяет установку корректной почасовой ставки
         /// </summary>
-        [Test]
-        public void Wage_ValidValue_SetsCorrectly()
+        [TestCaseSource(nameof(ValidWageCases))]
+        public void Wage_ValidValue_SetsCorrectly(double wage, string description)
         {
-            // Arrange
             var employee = new WageEmployee();
-            const double expectedWage = 750.5;
 
-            // Act
-            employee.Wage = expectedWage;
+            employee.Wage = wage;
 
-            // Assert
-            ClassicAssert.AreEqual(expectedWage, employee.Wage);
+            ClassicAssert.AreEqual(wage, employee.Wage);
         }
 
         /// <summary>
-        /// Проверяет, что нулевая почасовая ставка 
-        /// является допустимым значением
+        /// Данные для тестов невалидной почасовой ставки
         /// </summary>
-        [Test]
-        public void Wage_ZeroValue_Accepted()
+        public static IEnumerable<TestCaseData> InvalidWageCases
         {
-            // Arrange
-            var employee = new WageEmployee();
-
-            // Act
-            employee.Wage = 0;
-
-            // Assert
-            ClassicAssert.AreEqual(0, employee.Wage);
+            get
+            {
+                yield return new TestCaseData(-1, "Negative").SetName("Wage_NegativeValue_ThrowsException");
+                yield return new TestCaseData(2001, "ExceedsMax").SetName("Wage_ExceedsMaxValue_ThrowsException");
+            }
         }
 
         /// <summary>
-        /// Проверяет принятие максимального граничного 
-        /// значения почасовой ставки (2000 ₽/час)
+        /// Проверяет выбрасывание исключения при некорректной почасовой ставке
         /// </summary>
-        [Test]
-        public void Wage_MaxBoundaryValue_Accepted()
+        [TestCaseSource(nameof(InvalidWageCases))]
+        public void Wage_InvalidValue_ThrowsException(double wage, string description)
         {
-            // Arrange
             var employee = new WageEmployee();
 
-            // Act
-            employee.Wage = 2000;
-
-            // Assert
-            ClassicAssert.AreEqual(2000, employee.Wage);
-        }
-
-        /// <summary>
-        /// Проверяет, что почасовая ставка свыше лимита (2000 ₽) 
-        /// вызывает исключение
-        /// </summary>
-        [Test]
-        public void Wage_ExceedsMaxValue_ThrowsException()
-        {
-            // Arrange
-            var employee = new WageEmployee();
-
-            // Act & Assert
             ClassicAssert.Throws<IncorrectArgumentException>(
-                () => employee.Wage = 2001);
+                () => employee.Wage = wage);
+        }
+
+        #endregion
+
+        #region Параметризованные тесты для WageEmployee.CalculateSalary
+
+        /// <summary>
+        /// Данные для тестов расчёта почасовой зарплаты: (ставка, часы, ожидаемый результат, описание)
+        /// </summary>
+        public static IEnumerable<TestCaseData> WageCalculationCases
+        {
+            get
+            {
+                yield return new TestCaseData(500, 100, 50000, "IntegerValues").SetName("CalculateSalary_Hourly_IntegerValues_CalculatedCorrectly");
+                yield return new TestCaseData(350.75, 40.5, 14205.375, "FractionalValues").SetName("CalculateSalary_WithFractionalValues_CalculatedCorrectly");
+                yield return new TestCaseData(1000, 0, 0, "ZeroHours").SetName("CalculateSalary_ZeroHours_ReturnsZero");
+                yield return new TestCaseData(0, 50, 0, "ZeroWage").SetName("CalculateSalary_ZeroWage_ReturnsZero");
+            }
         }
 
         /// <summary>
-        /// Проверяет, что отрицательная почасовая ставка вызывает исключение
+        /// Проверяет корректность расчёта почасовой зарплаты по формуле: Wage × HourCount
         /// </summary>
-        [Test]
-        public void Wage_NegativeValue_ThrowsException()
+        [TestCaseSource(nameof(WageCalculationCases))]
+        public void CalculateSalary_WageEmployee_CalculatedCorrectly(
+            double wage, double hours, double expected, string description)
         {
-            // Arrange
-            var employee = new WageEmployee();
-
-            // Act & Assert
-            ClassicAssert.Throws<IncorrectArgumentException>(
-                () => employee.Wage = -100);
-        }
-
-        /// <summary>
-        /// Проверяет корректность расчёта почасовой зарплаты
-        /// </summary>
-        [Test]
-        public void CalculateSalary_Hourly_CalculatedCorrectly()
-        {
-            // Arrange
             var employee = new WageEmployee
             {
-                Wage = 500,
-                HourCount = 100
+                Wage = wage,
+                HourCount = hours
             };
-            const double expected = 500 * 100;
 
-            // Act
             var result = employee.CalculateSalary();
 
-            // Assert
-            ClassicAssert.AreEqual(expected, result);
+            ClassicAssert.AreEqual(expected, result, 0.001,
+                $"Расчёт не совпадает для сценария: {description}");
         }
 
+        #endregion
+
+        #region Параметризованные тесты для свойства Gender
+
         /// <summary>
-        /// Проверяет расчёт зарплаты с дробными значениями часов и ставки
+        /// Проверяет установку значений перечисления Gender
         /// </summary>
-        [Test]
-        public void CalculateSalary_WithFractionalHours_CalculatedCorrectly()
+        /// <param name="gender">Значение пола</param>
+        [TestCase(Gender.Male, TestName = "Gender_MaleValue_SetsCorrectly")]
+        [TestCase(Gender.Female, TestName = "Gender_FemaleValue_SetsCorrectly")]
+        public void Gender_ValidValue_SetsCorrectly(Gender gender)
         {
-            // Arrange
-            var employee = new WageEmployee
+            var employee = new SalaryEmployee();
+
+            employee.Gender = gender;
+
+            ClassicAssert.AreEqual(gender, employee.Gender);
+        }
+
+        #endregion
+
+        #region Параметризованные тесты для конструкторов
+
+        /// <summary>
+        /// Данные для тестов инициализации конструкторами: (тип сотрудника, ожидаемые значения)
+        /// </summary>
+        public static IEnumerable<TestCaseData> ConstructorInitializationCases
+        {
+            get
             {
-                Wage = 350.75,
-                HourCount = 40.5
-            };
-            const double expected = 40.5 * 350.75;
+                yield return new TestCaseData(
+                    new SalaryEmployee(),
+                    string.Empty, string.Empty, string.Empty, 0, 0,
+                    "SalaryEmployee").SetName("SalaryEmployee_DefaultConstructor_InitializesProperties");
 
-            // Act
-            var result = employee.CalculateSalary();
-
-            // Assert
-            ClassicAssert.AreEqual(expected, result);
+                yield return new TestCaseData(
+                    new WageEmployee(),
+                    string.Empty, string.Empty, string.Empty, 0, 0,
+                    "WageEmployee").SetName("WageEmployee_DefaultConstructor_InitializesProperties");
+            }
         }
+
+        /// <summary>
+        /// Проверяет корректную инициализацию свойств конструктором по умолчанию
+        /// </summary>
+        /// <param name="employee">Экземпляр сотрудника</param>
+        /// <param name="expectedFirstName">Ожидаемое значение FirstName</param>
+        /// <param name="expectedLastName">Ожидаемое значение LastName</param>
+        /// <param name="expectedProfession">Ожидаемое значение Profession</param>
+        /// <param name="expectedNumeric1">Ожидаемое значение первого числового свойства</param>
+        /// <param name="expectedNumeric2">Ожидаемое значение второго числового свойства</param>
+        /// <param name="employeeType">Тип сотрудника для сообщения</param>
+        [TestCaseSource(nameof(ConstructorInitializationCases))]
+        public void DefaultConstructor_InitializesProperties(
+            EmployeBase employee,
+            string expectedFirstName, string expectedLastName, string expectedProfession,
+            double expectedNumeric1, double expectedNumeric2,
+            string employeeType)
+        {
+            ClassicAssert.AreEqual(expectedFirstName, employee.FirstName,
+                $"FirstName не инициализирован для {employeeType}");
+            ClassicAssert.AreEqual(expectedLastName, employee.LastName,
+                $"LastName не инициализирован для {employeeType}");
+            ClassicAssert.AreEqual(expectedProfession, employee.Profession,
+                $"Profession не инициализирован для {employeeType}");
+        }
+
         #endregion
 
-        #region Tests for Exception
+        #region Параметризованные тесты для исключений
 
         /// <summary>
-        /// Проверяет, что сообщение исключения IncorrectArgumentException
-        /// корректно сохраняется и передаётся через конструктор
+        /// Проверяет сохранение сообщения в исключении IncorrectArgumentException
         /// </summary>
-        [Test]
-        public void IncorrectArgumentException_Message_Preserved()
+        /// <param name="message">Тестовое сообщение</param>
+        [TestCase("Тестовое сообщение", TestName = "IncorrectArgumentException_Message_Preserved")]
+        [TestCase("", TestName = "IncorrectArgumentException_EmptyMessage_Preserved")]
+        [TestCase("Ошибка валидации: поле не может быть пустым", TestName = "IncorrectArgumentException_LongMessage_Preserved")]
+        public void IncorrectArgumentException_Message_Preserved(string message)
         {
-            // Arrange
-            const string expectedMessage = "Тестовое сообщение ошибки";
+            var exception = new IncorrectArgumentException(message);
 
-            // Act
-            var exception = new IncorrectArgumentException(expectedMessage);
-
-            // Assert
-            ClassicAssert.AreEqual(expectedMessage, exception.Message);
+            ClassicAssert.AreEqual(message, exception.Message);
         }
 
         /// <summary>
-        /// Проверяет, что при валидации диапазона с переданным кастомным 
-        /// сообщением исключение содержит именно это сообщение
+        /// Данные для тестов валидации диапазона: (значение, поле, min, max, кастомное сообщение, ожидание)
         /// </summary>
-        [Test]
-        public void ValidateRange_CustomMessage_UsedWhenProvided()
+        public static IEnumerable<TestCaseData> ValidateRangeCases
         {
-            // Arrange
+            get
+            {
+                yield return new TestCaseData(10, "test", 5, 20, null, false, "Valid_InRange")
+                    .SetName("ValidateRange_ValidValue_DoesNotThrow");
+                yield return new TestCaseData(5, "test", 5, 20, null, false, "Valid_MinBoundary")
+                    .SetName("ValidateRange_MinBoundary_DoesNotThrow");
+                yield return new TestCaseData(20, "test", 5, 20, null, false, "Valid_MaxBoundary")
+                    .SetName("ValidateRange_MaxBoundary_DoesNotThrow");
+
+                yield return new TestCaseData(4, "testField", 5, 20, null, true, "BelowMin_DefaultMessage")
+                    .SetName("ValidateRange_BelowMin_ThrowsWithDefaultMessage");
+                yield return new TestCaseData(21, "testField", 5, 20, null, true, "AboveMax_DefaultMessage")
+                    .SetName("ValidateRange_AboveMax_ThrowsWithDefaultMessage");
+                yield return new TestCaseData(3, "customField", 5, 20, "Пользовательское сообщение", true, "CustomMessage")
+                    .SetName("ValidateRange_InvalidValue_ThrowsWithCustomMessage");
+            }
+        }
+
+        /// <summary>
+        /// Проверяет корректность работы метода валидации диапазона
+        /// </summary>
+        [TestCaseSource(nameof(ValidateRangeCases))]
+        public void ValidateRange_CorrectlyValidatesInput(
+            double value, string fieldName, int minValue, int maxValue,
+            string customMessage, bool shouldThrow, string description)
+        {
             var employee = new TestEmployee();
-            const string customMessage = "Какое-то сообщение";
 
-            // Act & Assert
-            var exception = ClassicAssert.Throws<IncorrectArgumentException>(
-                () => employee.TestValidateRange(
-                    5, "test", 10, 20, customMessage));
-            ClassicAssert.AreEqual(customMessage, exception.Message);
+            if (shouldThrow)
+            {
+                var exception = ClassicAssert.Throws<IncorrectArgumentException>(
+                    () => employee.TestValidateRange(value, fieldName, minValue, maxValue, customMessage));
+
+                if (customMessage != null)
+                {
+                    ClassicAssert.AreEqual(customMessage, exception.Message,
+                        $"Кастомное сообщение не совпадает для сценария: {description}");
+                }
+                else
+                {
+                    ClassicAssert.IsTrue(exception.Message.Contains(fieldName),
+                        $"Сообщение не содержит имя поля для сценария: {description}");
+                    ClassicAssert.IsTrue(exception.Message.Contains(minValue.ToString()) &&
+                                       exception.Message.Contains(maxValue.ToString()),
+                        $"Сообщение не содержит границы диапазона для сценария: {description}");
+                }
+            }
+            else
+            {
+                Assert.DoesNotThrow(() =>
+                    employee.TestValidateRange(value, fieldName, minValue, maxValue, customMessage));
+            }
         }
 
-        /// <summary>
-        /// Проверяет, что при валидации диапазона без кастомного сообщения
-        /// генерируется сообщение по умолчанию с указанием поля и границ
-        /// </summary>
-        [Test]
-        public void ValidateRange_DefaultMessage_UsedWhenCustomIsNull()
-        {
-            // Arrange
-            var employee = new TestEmployee();
-
-            // Act & Assert
-            var exception = ClassicAssert.Throws<IncorrectArgumentException>(
-                () => employee.TestValidateRange(5, "testField", 10, 20));
-            ClassicAssert.IsTrue(exception.Message.Contains("testField"));
-            ClassicAssert.IsTrue(exception.Message.Contains("10"));
-            ClassicAssert.IsTrue(exception.Message.Contains("20"));
-        }
         #endregion
 
-        #region Tests for Gender
-
-        /// <summary>
-        /// Проверяет установку значения мужского пола в свойство Gender
-        /// </summary>
-        [Test]
-        public void Gender_MaleValue_SetsCorrectly()
-        {
-            // Arrange
-            var employee = new SalaryEmployee();
-
-            // Act
-            employee.Gender = Gender.Male;
-
-            // Assert
-            ClassicAssert.AreEqual(Gender.Male, employee.Gender);
-        }
-
-        /// <summary>
-        /// Проверяет установку значения женского пола в свойство Gender
-        /// </summary>
-        [Test]
-        public void Gender_FemaleValue_SetsCorrectly()
-        {
-            // Arrange
-            var employee = new WageEmployee();
-
-            // Act
-            employee.Gender = Gender.Female;
-
-            // Assert
-            ClassicAssert.AreEqual(Gender.Female, employee.Gender);
-        }
-        #endregion
-
-        #region Tests for Construction
-
-        /// <summary>
-        /// Проверяет, что конструктор по умолчанию SalaryEmployee
-        /// корректно инициализирует все строковые свойства пустыми строками,
-        /// а числовые — нулевыми значениями
-        /// </summary>
-        [Test]
-        public void SalaryEmployee_DefaultConstructor_InitializesProperties()
-        {
-            // Arrange & Act
-            var employee = new SalaryEmployee();
-
-            // Assert
-            ClassicAssert.AreEqual(string.Empty, employee.FirstName);
-            ClassicAssert.AreEqual(string.Empty, employee.LastName);
-            ClassicAssert.AreEqual(string.Empty, employee.Profession);
-            ClassicAssert.AreEqual(0, employee.Salary);
-            ClassicAssert.AreEqual(0, employee.Commission);
-        }
-
-        /// <summary>
-        /// Проверяет, что конструктор по умолчанию WageEmployee
-        /// корректно инициализирует все строковые свойства пустыми строками,
-        /// а числовые — нулевыми значениями
-        /// </summary>
-        [Test]
-        public void WageEmployee_DefaultConstructor_InitializesProperties()
-        {
-            // Arrange & Act
-            var employee = new WageEmployee();
-
-            // Assert
-            ClassicAssert.AreEqual(string.Empty, employee.FirstName);
-            ClassicAssert.AreEqual(string.Empty, employee.LastName);
-            ClassicAssert.AreEqual(string.Empty, employee.Profession);
-            ClassicAssert.AreEqual(0, employee.HourCount);
-            ClassicAssert.AreEqual(0, employee.Wage);
-        }
-        #endregion
-
-        #region Tests for protected methods
+        #region Вспомогательный класс для тестирования protected-методов
 
         /// <summary>
         /// Вспомогательный класс-наследник EmployeBase для тестирования
-        /// protected методов базового класса
+        /// защищённых методов базового класса
         /// </summary>
         public class TestEmployee : EmployeBase
         {
             /// <summary>
-            /// Абстрактная реализация метода CalculateSalary 
-            /// для возможности наследования
+            /// Абстрактная реализация метода CalculateSalary для возможности наследования
             /// </summary>
-            /// <returns>Всегда возвращает 0</returns>
             public override double CalculateSalary() => 0;
 
             /// <summary>
-            /// Метод для вызова защищённого метода ValidateRange
-            /// из тестов
+            /// Публичный обёрточный метод для вызова защищённого метода ValidateRange
             /// </summary>
-            /// <param name="value">Проверяемое числовое значение</param>
-            /// <param name="fieldName">Название поля для 
-            /// сообщения об ошибке</param>
-            /// <param name="minValue">Минимальная граница диапазона</param>
-            /// <param name="maxValue">Максимальная граница диапазона</param>
-            /// <param name="customMessage">Кастомное сообщение</param>
             public void TestValidateRange(double value, string fieldName,
                 int minValue, int maxValue, string customMessage = null)
             {
-                ValidateRange(value, fieldName, minValue,
-                    maxValue, customMessage);
+                ValidateRange(value, fieldName, minValue, maxValue, customMessage);
             }
         }
+
         #endregion
     }
 }
