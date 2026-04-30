@@ -4,7 +4,7 @@ using Model;
 namespace ModelTests
 {
     /// <summary>
-    /// Класс для проведения модульных тестов
+    /// Класс для проведения тестов класса EmployeBase
     /// </summary>
     [TestFixture]
     public class EmployeBaseTest

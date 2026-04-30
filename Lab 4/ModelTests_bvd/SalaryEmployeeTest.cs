@@ -1,6 +1,10 @@
 ﻿using Model;
 
 namespace ModelTests;
+
+/// <summary>
+/// Класс для проведения тестов класса SalaryEmployee
+/// </summary>
 public class SalaryEmployeeTest
 {
     /// <summary>

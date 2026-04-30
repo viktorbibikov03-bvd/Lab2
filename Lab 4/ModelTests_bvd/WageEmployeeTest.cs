@@ -2,6 +2,9 @@
 
 namespace ModelTests;
 
+/// <summary>
+/// Класс для проведения тестов класса WageEmployee
+/// </summary>
 public class WageEmployeeTest
 {
     /// <summary>

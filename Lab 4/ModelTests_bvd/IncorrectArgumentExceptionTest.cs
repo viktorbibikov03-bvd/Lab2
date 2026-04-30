@@ -3,6 +3,9 @@ using static ModelTests.EmployeBaseTest;
 
 namespace ModelTests;
 
+/// <summary>
+/// Класс для проведения тестов класса IncorrectArgumentException
+/// </summary>
 public class IncorrectArgumentExceptionTest
 {
     /// <summary>
