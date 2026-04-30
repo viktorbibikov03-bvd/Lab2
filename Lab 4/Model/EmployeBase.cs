@@ -118,26 +118,26 @@
         /// </summary>
         public int Age
         {
-            get
-            {
+            get 
+            { 
                 return _age;
             }
             set
             {
-                if (string.IsNullOrEmpty(Convert.ToString(value)))
-                {
-                    throw new IncorrectArgumentException("Введите возраст!");
-                }
-
                 var retirementAge = new Dictionary<Gender, int>
                 {
                     { Gender.Male, 65 },
                     { Gender.Female, 60 }
                 };
 
-                ValidateRange(value, "возраст", MinAge,
-                    retirementAge[Gender]);
+                if (!retirementAge.ContainsKey(Gender))
+                {
+                    throw new IncorrectArgumentException(
+                        $"Недопустимое значение пола: {Gender}");
+                }
 
+                ValidateRange(value, "возраст", MinAge, 
+                    retirementAge[Gender]);
                 _age = value;
             }
         }
