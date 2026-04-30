@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View", "Lab 4\View.csproj",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{CDFF0C32-3D6E-4860-9145-E28B8922426A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelTests_bvd", "ModelTests_bvd\ModelTests_bvd.csproj", "{4B4908E7-91CF-4E96-9FB2-7663576F9E80}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelTests", "ModelTests_bvd\ModelTests.csproj", "{4B4908E7-91CF-4E96-9FB2-7663576F9E80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
